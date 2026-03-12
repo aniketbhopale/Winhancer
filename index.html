@@ -174,7 +174,7 @@
         </div>
         
         <div id="tweaksList" class="space-y-4">
-            <!-- Tweak 1: Visual Effects -->
+            <!-- Tweak 1: Visual Effects (Universal) -->
             <div class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" onclick="showGuide('visual')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -190,7 +190,7 @@
                 </div>
             </div>
 
-            <!-- Tweak 2: Foreground Task Prioritization -->
+            <!-- Tweak 2: Foreground Task Prioritization (Universal) -->
             <div class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" style="animation-delay: 0.1s;" onclick="showGuide('foreground')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -205,6 +205,23 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Tweak 3: AMD Ryzen Balanced (Group 1 Specific) -->
+            <div id="tweak-early-gen-balanced" class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.2s;" onclick="showGuide('early-balanced')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-medium leading-relaxed">Apply AMD Ryzen balanced plan for less heat and fan noise</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -274,6 +291,16 @@
         function showTweakList(groupName) {
             currentCpuGroup = groupName;
             document.getElementById('tweakListSubtitle').innerText = `Architecture: ${groupName}. Select a specific optimization to view its detailed guide.`;
+            
+            // Dynamic Generation Routing: Show/Hide group-specific tweaks
+            const earlyGenBalanced = document.getElementById('tweak-early-gen-balanced');
+            
+            if (groupName === 'Early-Gen Ryzen') {
+                earlyGenBalanced.classList.remove('hidden');
+            } else {
+                earlyGenBalanced.classList.add('hidden');
+            }
+
             navigate('tweaksListPage');
         }
         
@@ -289,12 +316,11 @@
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                                <!-- UPDATED VIDEO SOURCE PATH HERE -->
                                 <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
                                     <source src="videos/CPU Ryzen 5 (1).mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough: Disabling UI Animations in Advanced System Settings</p>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
                                 <div>
@@ -323,17 +349,13 @@
                 guideContainer.innerHTML = `
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
-                            
-                            <!-- Left Side: Video Player -->
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
                                 <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
                                     <source src="videos/Cpu Ryzen 5 (2).mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough: Adjusting Processor Scheduling via sysdm.cpl</p>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
-                            
-                            <!-- Right Side: Structured Q&A -->
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
@@ -348,13 +370,44 @@
                                     <p class="text-slate-600 mt-1">Ans: It is 100% safe. If you select "Programs," a background file download might just take slightly longer. If you select "Background services," your active foreground application might experience slight latency to keep background operations running smoothly.</p>
                                 </div>
                             </div>
-                            
                         </div>
-                        
-                        <!-- Bottom Warning Note -->
                         <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4">
                             <p class="text-sm text-indigo-800">
                                 <strong class="font-bold">NOTE:</strong> Because this is an OS-level tweak, it works identically across all Ryzen generations without affecting your hardware warranty or thermals.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else if (tweakType === 'early-balanced') {
+                headerText.innerText = `${currentCpuGroup}: Apply AMD Ryzen Balanced Plan`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                                    <source src="videos/Cpu Ryzen 2 (3).mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Early AM4 motherboard (AMD 2000/3000 series) users experiencing unusually high idle temperatures and loud fan noise.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It instructs the older Zen/Zen 2 core complexes exactly when to sleep properly, correcting a known gap in the default Windows scheduler.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
+                                    <p class="text-slate-600 mt-1">Ans: None. This is the officially intended and safe operating state for this specific hardware architecture.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4">
+                            <p class="text-sm text-emerald-800">
+                                <strong class="font-bold">NOTE:</strong> Enabling High Performance might give better performance but can cause rapid increase in temp of cpu with moderate browsing or during moderate multitasking in low end CPUs.
                             </p>
                         </div>
                     </div>
