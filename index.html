@@ -238,6 +238,23 @@
                 </div>
             </div>
 
+            <!-- Tweak 5: Core Parking (Group 1 Specific) -->
+            <div id="tweak-early-gen-coreparking" class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.4s;" onclick="showGuide('early-coreparking')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-medium leading-relaxed">Optimize Core Parking via QuickCPU</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -311,13 +328,16 @@
             // Dynamic Generation Routing: Show/Hide group-specific tweaks
             const earlyGenBalanced = document.getElementById('tweak-early-gen-balanced');
             const earlyGenMinState = document.getElementById('tweak-early-gen-minstate');
+            const earlyGenCoreParking = document.getElementById('tweak-early-gen-coreparking');
             
             if (groupName === 'Early-Gen Ryzen') {
                 earlyGenBalanced.classList.remove('hidden');
                 earlyGenMinState.classList.remove('hidden');
+                earlyGenCoreParking.classList.remove('hidden');
             } else {
                 earlyGenBalanced.classList.add('hidden');
                 earlyGenMinState.classList.add('hidden');
+                earlyGenCoreParking.classList.add('hidden');
             }
 
             navigate('tweaksListPage');
@@ -450,7 +470,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents Windows from artificially locking the CPU clock speed at max or near to max. It allows the hardware to "relax" and downscale power consumption when you aren't doing anything heavy.</p>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents Windows from artificially locking the CPU clock speed at 100%. It allows the hardware to "relax" and downscale power consumption when you aren't doing anything heavy.</p>
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
@@ -461,6 +481,40 @@
                         <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4">
                             <p class="text-sm text-emerald-800">
                                 <strong class="font-bold">NOTE:</strong> Desktop users will only see a "Plugged in" option under Minimum Processor State. Simply set it to 5% and follow the exact same steps.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else if (tweakType === 'early-coreparking') {
+                headerText.innerText = `${currentCpuGroup}: Optimize Core Parking via QuickCPU`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                                    <source src="videos/Cpu Ryzen 2 (5).mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who do heavy work and experience "micro-stutters" or tiny freezes when opening new apps and prioritize raw responsiveness and performance over power saving.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It forces Windows to keep all CPU cores awake and ready to execute instructions, completely eliminating the excess delay caused by waking up sleeping cores.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
+                                    <p class="text-slate-600 mt-1">Ans: It will increase your baseline idle temperatures and power consumption. Because the cores never fully go to sleep, they constantly draw power. It's a deliberate trading of high heat with good responsiveness and performance.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4">
+                            <p class="text-sm text-sky-800">
+                                <strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.
                             </p>
                         </div>
                     </div>
