@@ -136,19 +136,27 @@
         </div>
         
         <div id="amdSeriesSelection" class="hidden">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">AMD SKU Selection</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Not wired up -->
-                <div class="glass-card p-5 text-center font-semibold text-slate-800">Athlon</div>
-                <div class="glass-card p-5 text-center font-semibold text-slate-800">Ryzen 3</div>
+            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Ryzen Generation</h2>
+            
+            <!-- Grouped Architecture Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Group 1 -->
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early-Gen Ryzen')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Early-Gen Ryzen</div>
+                    <p class="text-sm text-slate-500">2000 & 3000 Series (Zen / Zen 2)</p>
+                </div>
                 
-                <!-- RYZEN 5 (Wired up, but looks identical to the rest) -->
-                <div class="glass-card interactive-card p-5 text-center font-semibold text-slate-800" onclick="showTweakList()">Ryzen 5</div>
+                <!-- Group 2 -->
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Mid-Gen Ryzen')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Mid-Gen Ryzen</div>
+                    <p class="text-sm text-slate-500">4000 & 5000 Series (Zen 3)</p>
+                </div>
                 
-                <!-- Not wired up -->
-                <div class="glass-card p-5 text-center font-semibold text-slate-800">Ryzen 7</div>
-                <div class="glass-card p-5 text-center font-semibold text-slate-800">Ryzen 9</div>
-                <div class="glass-card p-5 text-center font-semibold text-slate-800">Threadripper</div>
+                <!-- Group 3 -->
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Next-Gen Ryzen')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Next-Gen Ryzen</div>
+                    <p class="text-sm text-slate-500">6000 Series & Newer (Zen 4+)</p>
+                </div>
             </div>
         </div>
     </div>
@@ -162,7 +170,7 @@
         
         <div class="mb-8 border-b border-slate-200 pb-8">
             <h1 class="text-4xl font-bold text-slate-900 mb-3">Recommended Tweaks</h1>
-            <p class="text-slate-500">Select a specific optimization to view its detailed guide.</p>
+            <p id="tweakListSubtitle" class="text-slate-500 text-lg">Select a specific optimization to view its detailed guide.</p>
         </div>
         
         <div id="tweaksList" class="space-y-4">
@@ -193,7 +201,7 @@
                         </div>
                     </div>
                     <div>
-                        <p class="text-slate-800 font-medium leading-relaxed">Enable Foreground Task Prioritization</p>
+                        <p class="text-slate-800 font-medium leading-relaxed">Processor Scheduling & App Prioritization</p>
                     </div>
                 </div>
             </div>
@@ -218,7 +226,7 @@
         
         <div class="mb-6 border-b border-slate-200 pb-4">
             <h1 class="text-3xl font-bold text-slate-900">Optimization Guide & Details</h1>
-            <p id="guideSubtitle" class="text-slate-500 mt-1">AMD Ryzen 5: Adjust Windows Visual Effects</p>
+            <p id="guideSubtitle" class="text-slate-500 mt-1 font-medium text-lg">Loading Group...</p>
         </div>
         
         <div id="guideContent">
@@ -227,6 +235,9 @@
     </div>
     
     <script>
+        // Store the user's architectural choice (e.g. "Early-Gen Ryzen") globally
+        let currentCpuGroup = "AMD Ryzen";
+
         // Simple navigation logic
         function navigate(pageId) {
             document.querySelectorAll('.page-container').forEach(page => {
@@ -259,8 +270,10 @@
             }
         }
         
-        // Show the list of tweaks
-        function showTweakList() {
+        // Show the list of tweaks and remember which group the user came from
+        function showTweakList(groupName) {
+            currentCpuGroup = groupName;
+            document.getElementById('tweakListSubtitle').innerText = `Architecture: ${groupName}. Select a specific optimization to view its detailed guide.`;
             navigate('tweaksListPage');
         }
         
@@ -271,7 +284,7 @@
             const headerText = document.getElementById('guideSubtitle');
             
             if (tweakType === 'visual') {
-                headerText.innerText = "AMD Ryzen 5: Adjust Windows Visual Effects";
+                headerText.innerText = `${currentCpuGroup}: Adjust Windows Visual Effects`;
                 guideContainer.innerHTML = `
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
@@ -306,7 +319,7 @@
                     </div>
                 `;
             } else if (tweakType === 'foreground') {
-                headerText.innerText = "AMD Ryzen 5: Enable Foreground Task Prioritization";
+                headerText.innerText = `${currentCpuGroup}: Processor Scheduling Prioritization`;
                 guideContainer.innerHTML = `
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
@@ -314,25 +327,25 @@
                             <!-- Left Side: Video Player -->
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
                                 <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
-                                    <source src="videos/performance-mode-tutorial.mp4" type="video/mp4">
+                                    <source src="videos/Cpu Ryzen 5 (2).mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough: Enabling Performance Mode in Windows Settings</p>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough: Adjusting Processor Scheduling via sysdm.cpl</p>
                             </div>
                             
                             <!-- Right Side: Structured Q&A -->
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Everyday users and professionals running heavy graphic applications who want a free performance boost without the risk of touching complicated BIOS settings.</p>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It entirely depends on your workload! If you want <b>FOREGROUND</b> processes (like active rendering software) to run fastest, select <b>"Programs"</b>. If you want <b>BACKGROUND</b> processes (like hosting a server, running a script, or background rendering) to be prioritized, let it remain as <b>"Background services"</b>.</p>
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It tells Windows to prioritize your active heavy application. It automatically suspends background telemetry, pauses system updates, and allocates more CPU threads to the foreground task.</p>
+                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It alters the Windows CPU scheduler. It decides whether the processor gives larger, uninterrupted calculation timeslices to the window you are currently clicking on, or if it shares power equally with minimized apps.</p>
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
-                                    <p class="text-slate-600 mt-1">Ans: It is 100% safe for your hardware. The minor effect is the notifications might be slightly delayed until you close your active heavy application.</p>
+                                    <p class="text-slate-600 mt-1">Ans: It is 100% safe. If you select "Programs," a background file download might just take slightly longer. If you select "Background services," your active foreground application might experience slight latency to keep background operations running smoothly.</p>
                                 </div>
                             </div>
                             
@@ -341,7 +354,7 @@
                         <!-- Bottom Warning Note -->
                         <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4">
                             <p class="text-sm text-indigo-800">
-                                <strong class="font-bold">NOTE:</strong> Because this is an OS-level tweak, it works safely across all Ryzen 5 generations without affecting your hardware warranty or cooling requirements.
+                                <strong class="font-bold">NOTE:</strong> Because this is an OS-level tweak, it works identically across all Ryzen generations without affecting your hardware warranty or thermals.
                             </p>
                         </div>
                     </div>
