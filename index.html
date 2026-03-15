@@ -244,7 +244,20 @@
                 </div>
             </div>
 
-            <div id="tweak-early-coreparking" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('early-coreparking')">
+            <!-- Group 2 Shared Tweak (AMD Mid-Gen & Intel Early Hybrid) -->
+            <div id="tweak-mid-balanced" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('mid-balanced')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Apply power plan for Balanced Workload</p></div>
+                </div>
+            </div>
+
+            <!-- AMD: Mid-Gen Ryzen -->
+            <div id="tweak-mid-coreparking" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('mid-coreparking')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300">
@@ -255,15 +268,15 @@
                 </div>
             </div>
 
-            <!-- Group 2 Shared Tweak (AMD Mid-Gen & Intel Early Hybrid) -->
-            <div id="tweak-mid-balanced" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('mid-balanced')">
+            <!-- AMD: Next-Gen Ryzen (Group 3) -->
+            <div id="tweak-next-boost" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('next-boost')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
-                        <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                        <div class="w-6 h-6 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
                     </div>
-                    <div><p class="text-slate-800 font-medium leading-relaxed">Apply power plan for Balanced Workload</p></div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Processor Performance Boost Mode</p></div>
                 </div>
             </div>
 
@@ -353,13 +366,24 @@
             if (groupName === 'Early-Gen Ryzen') {
                 document.getElementById('tweak-early-balanced').classList.remove('hidden');
                 document.getElementById('tweak-early-minstate').classList.remove('hidden');
-                document.getElementById('tweak-early-coreparking').classList.remove('hidden');
             }
             
             // Group 2 Shared Tweak (AMD Mid-Gen & Intel Early Hybrid)
             if (groupName === 'Mid-Gen Ryzen' || groupName === 'Early Hybrid Intel') {
                 const midBalanced = document.getElementById('tweak-mid-balanced');
                 if (midBalanced) midBalanced.classList.remove('hidden');
+            }
+
+            // Group 2 AMD specific
+            if (groupName === 'Mid-Gen Ryzen') {
+                const midCoreParking = document.getElementById('tweak-mid-coreparking');
+                if (midCoreParking) midCoreParking.classList.remove('hidden');
+            }
+            
+            // Group 3 AMD specific
+            if (groupName === 'Next-Gen Ryzen') {
+                const nextBoost = document.getElementById('tweak-next-boost');
+                if (nextBoost) nextBoost.classList.remove('hidden');
             }
             
             // Semi-Universal: Show Startup Apps tweak ONLY for the first two groups of AMD and Intel
@@ -474,7 +498,7 @@
                         <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4"><p class="text-sm text-emerald-800"><strong class="font-bold">NOTE:</strong> Desktop users will only see a "Plugged in" option. Set it to 5%.</p></div>
                     </div>
                 `;
-            } else if (tweakType === 'early-coreparking') {
+            } else if (tweakType === 'mid-coreparking') {
                 headerText.innerText = `${currentCpuGroup}: Optimize Core Parking via QuickCPU`;
                 guideContainer.innerHTML = `
                     <div class="glass-card overflow-hidden fade-in">
@@ -508,6 +532,34 @@
                             </div>
                         </div>
                         <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> Balanced mode works especially well with modern CPUs that use both performance and efficiency cores, helping the system balance speed and power usage.</p></div>
+                    </div>
+                `;
+            } else if (tweakType === 'next-boost') {
+                headerText.innerText = `${currentCpuGroup}: Processor Performance Boost Mode`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (3).mp4" type="video/mp4"></video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Laptop users who want a good balance between performance and temperature while running everyday workloads such as browsing, coding, media, or occasional heavy tasks.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It changes the CPU boost behavior so the processor increases its clock speed only when necessary instead of boosting aggressively all the time.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. Extremely heavy workloads may see slightly slower boost response compared to the fully aggressive mode.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4 text-sm text-orange-800">
+                            <p class="mb-2"><strong class="font-bold">NOTE:</strong> Processor Boost Mode controls how aggressively the CPU increases its clock speed when a workload appears. Different modes prioritize either performance or power efficiency.</p>
+                            <ul class="list-disc pl-5 mb-2 space-y-1">
+                                <li><strong>Disabled:</strong> Prevents the CPU from boosting above its base clock speed. This reduces heat and power usage but also lowers performance.</li>
+                                <li><strong>Enabled:</strong> Allows the processor to boost normally when the operating system requests higher performance.</li>
+                                <li><strong>Aggressive:</strong> The CPU boosts to higher frequencies immediately when workload appears, providing the fastest performance but also increasing heat and power consumption.</li>
+                                <li><strong>Efficient Enabled:</strong> Allows boosting while attempting to maintain better energy efficiency compared to the standard enabled mode.</li>
+                                <li><strong>Efficient Aggressive:</strong> Boosts quickly when needed but still tries to control power usage and temperature, making it suitable for balanced laptop usage.</li>
+                            </ul>
+                            <p>Users can adjust the boost mode according to their needs depending on whether they prefer maximum performance, balanced efficiency, or lower temperatures and better battery life.</p>
+                        </div>
                     </div>
                 `;
             }
