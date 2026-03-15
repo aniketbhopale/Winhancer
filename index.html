@@ -255,6 +255,18 @@
                 </div>
             </div>
 
+            <!-- Group 2 Shared Tweak (AMD Mid-Gen & Intel Early Hybrid) -->
+            <div id="tweak-mid-balanced" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('mid-balanced')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Apply power plan for Balanced Workload</p></div>
+                </div>
+            </div>
+
             <!-- INTEL TWEAKS CLEARED: READY FOR NEW ONES -->
 
         </div>
@@ -342,6 +354,12 @@
                 document.getElementById('tweak-early-balanced').classList.remove('hidden');
                 document.getElementById('tweak-early-minstate').classList.remove('hidden');
                 document.getElementById('tweak-early-coreparking').classList.remove('hidden');
+            }
+            
+            // Group 2 Shared Tweak (AMD Mid-Gen & Intel Early Hybrid)
+            if (groupName === 'Mid-Gen Ryzen' || groupName === 'Early Hybrid Intel') {
+                const midBalanced = document.getElementById('tweak-mid-balanced');
+                if (midBalanced) midBalanced.classList.remove('hidden');
             }
             
             // Semi-Universal: Show Startup Apps tweak ONLY for the first two groups of AMD and Intel
@@ -472,6 +490,24 @@
                             </div>
                         </div>
                         <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4"><p class="text-sm text-sky-800"><strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.</p></div>
+                    </div>
+                `;
+            } else if (tweakType === 'mid-balanced') {
+                headerText.innerText = `${currentCpuGroup}: Apply power plan for Balanced Workload`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Balanced Plan.mp4" type="video/mp4"></video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who perform mixed workloads should use this mode. It is ideal for people who sometimes run heavy applications and sometimes perform light tasks like browsing or office work.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Balanced Power Plan automatically adjusts CPU performance based on system workload. It increases processor speed during demanding tasks and reduces power usage when the system is idle or performing light work.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. However, in some cases maximum performance may not be maintained continuously like in High Performance mode.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> Balanced mode works especially well with modern CPUs that use both performance and efficiency cores, helping the system balance speed and power usage.</p></div>
                     </div>
                 `;
             }
