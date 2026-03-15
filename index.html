@@ -74,7 +74,7 @@
                 <p class="text-slate-500">Processor affinity, voltage tuning, and scheduling profiles.</p>
             </div>
             
-            <!-- GPU Block (Not wired up yet, looks normal) -->
+            <!-- GPU Block -->
             <div class="glass-card p-8">
                 <div class="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,7 +85,7 @@
                 <p class="text-slate-500">Frame timing, driver latency, and rendering optimizations.</p>
             </div>
             
-            <!-- RAM Block (Not wired up yet, looks normal) -->
+            <!-- RAM Block -->
             <div class="glass-card p-8">
                 <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,7 +96,7 @@
                 <p class="text-slate-500">Pagefile tuning, XMP profiles, and caching configurations.</p>
             </div>
             
-            <!-- Disk Block (Not wired up yet, looks normal) -->
+            <!-- Disk Block -->
             <div class="glass-card p-8">
                 <div class="w-14 h-14 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-6">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,14 +122,14 @@
                 <p class="text-slate-500">Choose your manufacturer to load specific instruction sets.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- INTEL (Not wired up yet) -->
-                <div class="glass-card p-6 text-center">
-                    <div class="text-blue-600 font-bold text-2xl mb-2 tracking-wider">INTEL</div>
+                <!-- INTEL -->
+                <div class="glass-card interactive-card p-6 text-center group" onclick="selectCpuBrand('intel')">
+                    <div class="text-blue-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-blue-700 transition-colors">INTEL</div>
                     <p class="text-sm text-slate-500">Core / Xeon Architecture</p>
                 </div>
-                <!-- AMD (Wired up) -->
+                <!-- AMD -->
                 <div class="glass-card interactive-card p-6 text-center group" onclick="selectCpuBrand('amd')">
-                    <div class="text-red-600 font-bold text-2xl mb-2 tracking-wider">AMD</div>
+                    <div class="text-red-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-red-700 transition-colors">AMD</div>
                     <p class="text-sm text-slate-500">Ryzen / Threadripper Architecture</p>
                 </div>
             </div>
@@ -137,31 +137,42 @@
         
         <div id="amdSeriesSelection" class="hidden">
             <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Ryzen Generation</h2>
-            
-            <!-- Grouped Architecture Layout -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Group 1 -->
                 <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early-Gen Ryzen')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Early-Gen Ryzen</div>
-                    <p class="text-sm text-slate-500">2000 & 3000 Series (Zen / Zen 2)</p>
+                    <p class="text-sm text-slate-500">2000 & 3000 Series</p>
                 </div>
-                
-                <!-- Group 2 -->
                 <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Mid-Gen Ryzen')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Mid-Gen Ryzen</div>
-                    <p class="text-sm text-slate-500">4000 & 5000 Series (Zen 3)</p>
+                    <p class="text-sm text-slate-500">4000 & 5000 Series</p>
                 </div>
-                
-                <!-- Group 3 -->
                 <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Next-Gen Ryzen')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Next-Gen Ryzen</div>
-                    <p class="text-sm text-slate-500">6000 Series & Newer (Zen 4+)</p>
+                    <p class="text-sm text-slate-500">6000 Series & Newer</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="intelSeriesSelection" class="hidden">
+            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Intel Generation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Legacy Intel')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Legacy & Pre-Hybrid</div>
+                    <p class="text-sm text-slate-500">8th, 9th, 10th Gen</p>
+                </div>
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early Hybrid Intel')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Early Hybrid</div>
+                    <p class="text-sm text-slate-500">11th & 12th Gen</p>
+                </div>
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Modern Hybrid Intel')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Modern Hybrid & Ultra</div>
+                    <p class="text-sm text-slate-500">13th, 14th Gen & Core Ultra</p>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Tweak List Page (The Intermediate Step) -->
+    <!-- Tweak List Page -->
     <div id="tweaksListPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
         <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
@@ -174,86 +185,77 @@
         </div>
         
         <div id="tweaksList" class="space-y-4">
-            <!-- Tweak 1: Visual Effects (Universal) -->
-            <div class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" onclick="showGuide('visual')">
+            
+            <!-- Universal Tweaks (Always Visible) -->
+            <div class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" onclick="showGuide('visual')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                         </div>
                     </div>
-                    <div>
-                        <p class="text-slate-800 font-medium leading-relaxed">Adjust Windows Visual Effects for Performance</p>
-                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Adjust Windows Visual Effects for Performance</p></div>
                 </div>
             </div>
 
-            <!-- Tweak 2: Foreground Task Prioritization (Universal) -->
-            <div class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" style="animation-delay: 0.1s;" onclick="showGuide('foreground')">
+            <div class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" style="animation-delay: 0.1s;" onclick="showGuide('foreground')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                         </div>
                     </div>
-                    <div>
-                        <p class="text-slate-800 font-medium leading-relaxed">Processor Scheduling & App Prioritization</p>
-                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Processor Scheduling & App Prioritization</p></div>
                 </div>
             </div>
 
-            <!-- Tweak 3: AMD Ryzen Balanced (Group 1 Specific) -->
-            <div id="tweak-early-gen-balanced" class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.2s;" onclick="showGuide('early-balanced')">
+            <!-- Universal Tweak 3: Disable Startup Apps (Semi-Universal for First 2 Groups) -->
+            <div id="tweak-startup-apps" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.15s;" onclick="showGuide('startup')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Disable Unnecessary Startup Applications</p></div>
+                </div>
+            </div>
+
+            <!-- AMD: Early-Gen Ryzen -->
+            <div id="tweak-early-balanced" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('early-balanced')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
                     </div>
-                    <div>
-                        <p class="text-slate-800 font-medium leading-relaxed">Apply AMD Ryzen balanced plan for less heat and fan noise</p>
-                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Apply AMD Ryzen balanced plan for less heat and fan noise</p></div>
                 </div>
             </div>
 
-            <!-- Tweak 4: Minimum Processor State (Group 1 Specific) -->
-            <div id="tweak-early-gen-minstate" class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.3s;" onclick="showGuide('early-minstate')">
+            <div id="tweak-early-minstate" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('early-minstate')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
                     </div>
-                    <div>
-                        <p class="text-slate-800 font-medium leading-relaxed">Set Minimum Processor State to 5%</p>
-                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Set Minimum Processor State to 5%</p></div>
                 </div>
             </div>
 
-            <!-- Tweak 5: Core Parking (Group 1 Specific) -->
-            <div id="tweak-early-gen-coreparking" class="group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.4s;" onclick="showGuide('early-coreparking')">
+            <div id="tweak-early-coreparking" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('early-coreparking')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
                     </div>
-                    <div>
-                        <p class="text-slate-800 font-medium leading-relaxed">Optimize Core Parking via QuickCPU</p>
-                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Optimize Core Parking via QuickCPU</p></div>
                 </div>
             </div>
+
+            <!-- INTEL TWEAKS CLEARED: READY FOR NEW ONES -->
 
         </div>
     </div>
@@ -285,10 +287,8 @@
     </div>
     
     <script>
-        // Store the user's architectural choice (e.g. "Early-Gen Ryzen") globally
         let currentCpuGroup = "AMD Ryzen";
 
-        // Simple navigation logic
         function navigate(pageId) {
             document.querySelectorAll('.page-container').forEach(page => {
                 page.classList.add('hidden');
@@ -309,46 +309,57 @@
         function resetSelections() {
             document.getElementById('cpuBrandSelection').classList.remove('hidden');
             document.getElementById('amdSeriesSelection').classList.add('hidden');
+            document.getElementById('intelSeriesSelection').classList.add('hidden');
         }
         
         function selectCpuBrand(brand) {
+            document.getElementById('cpuBrandSelection').classList.add('hidden');
             if (brand === 'amd') {
-                document.getElementById('cpuBrandSelection').classList.add('hidden');
                 const target = document.getElementById('amdSeriesSelection');
+                target.classList.remove('hidden');
+                target.classList.add('fade-in');
+            } else if (brand === 'intel') {
+                const target = document.getElementById('intelSeriesSelection');
                 target.classList.remove('hidden');
                 target.classList.add('fade-in');
             }
         }
         
-        // Show the list of tweaks and remember which group the user came from
         function showTweakList(groupName) {
             currentCpuGroup = groupName;
             document.getElementById('tweakListSubtitle').innerText = `Architecture: ${groupName}. Select a specific optimization to view its detailed guide.`;
             
-            // Dynamic Generation Routing: Show/Hide group-specific tweaks
-            const earlyGenBalanced = document.getElementById('tweak-early-gen-balanced');
-            const earlyGenMinState = document.getElementById('tweak-early-gen-minstate');
-            const earlyGenCoreParking = document.getElementById('tweak-early-gen-coreparking');
+            // Hide all brand-specific tweaks first
+            document.querySelectorAll('.tweak-card').forEach(card => {
+                // Keep the universal ones visible, hide everything that starts with 'tweak-'
+                if (card.id && card.id.startsWith('tweak-')) {
+                    card.classList.add('hidden');
+                }
+            });
             
+            // Route dynamically
             if (groupName === 'Early-Gen Ryzen') {
-                earlyGenBalanced.classList.remove('hidden');
-                earlyGenMinState.classList.remove('hidden');
-                earlyGenCoreParking.classList.remove('hidden');
-            } else {
-                earlyGenBalanced.classList.add('hidden');
-                earlyGenMinState.classList.add('hidden');
-                earlyGenCoreParking.classList.add('hidden');
+                document.getElementById('tweak-early-balanced').classList.remove('hidden');
+                document.getElementById('tweak-early-minstate').classList.remove('hidden');
+                document.getElementById('tweak-early-coreparking').classList.remove('hidden');
+            }
+            
+            // Semi-Universal: Show Startup Apps tweak ONLY for the first two groups of AMD and Intel
+            const startupAppGroups = ['Early-Gen Ryzen', 'Mid-Gen Ryzen', 'Legacy Intel', 'Early Hybrid Intel'];
+            if (startupAppGroups.includes(groupName)) {
+                const startupTweak = document.getElementById('tweak-startup-apps');
+                if(startupTweak) startupTweak.classList.remove('hidden');
             }
 
             navigate('tweaksListPage');
         }
         
-        // Final State generation for demo purposes
         function showGuide(tweakType) {
             navigate('tweaksPage');
             const guideContainer = document.getElementById('guideContent');
             const headerText = document.getElementById('guideSubtitle');
             
+            // ================== UNIVERSAL & AMD ==================
             if (tweakType === 'visual') {
                 headerText.innerText = `${currentCpuGroup}: Adjust Windows Visual Effects`;
                 guideContainer.innerHTML = `
@@ -357,30 +368,16 @@
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
                                 <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
                                     <source src="videos/CPU Ryzen 5 (1).mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
                                 </video>
                                 <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users running heavy applications on systems with limited hardware, or those who value raw operating system speed over modern aesthetics.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It disables all Windows UI animations, drop shadows, translucent menus, and smooth scrolling to free up CPU cycles and system memory.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
-                                    <p class="text-slate-600 mt-1">Ans: It will make Windows look significantly older and less polished.</p>
-                                </div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users running heavy applications on systems with limited hardware, or those who value raw operating system speed over modern aesthetics.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It disables all Windows UI animations, drop shadows, translucent menus, and smooth scrolling to free up CPU cycles and system memory.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will make Windows look significantly older and less polished.</p></div>
                             </div>
                         </div>
-                        <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4">
-                            <p class="text-sm text-indigo-800">
-                                <strong class="font-bold">NOTE:</strong> This is a 100% safe OS-level tweak that can be easily reversed at any time by selecting "Let Windows choose what's best for my computer."
-                            </p>
-                        </div>
+                        <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> This is a 100% safe OS-level tweak that can be easily reversed at any time.</p></div>
                     </div>
                 `;
             } else if (tweakType === 'foreground') {
@@ -391,30 +388,36 @@
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
                                 <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
                                     <source src="videos/Cpu Ryzen 5 (2).mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
                                 </video>
                                 <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It entirely depends on your workload! If you want <b>FOREGROUND</b> processes (like active rendering software) to run fastest, select <b>"Programs"</b>. If you want <b>BACKGROUND</b> processes (like hosting a server, running a script, or background rendering) to be prioritized, let it remain as <b>"Background services"</b>.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It alters the Windows CPU scheduler. It decides whether the processor gives larger, uninterrupted calculation timeslices to the window you are currently clicking on, or if it shares power equally with minimized apps.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
-                                    <p class="text-slate-600 mt-1">Ans: It is 100% safe. If you select "Programs," a background file download might just take slightly longer. If you select "Background services," your active foreground application might experience slight latency to keep background operations running smoothly.</p>
-                                </div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It entirely depends on your workload! If you want FOREGROUND processes to run fastest, select "Programs". If you want BACKGROUND processes to be prioritized, let it remain as "Background services".</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It alters the Windows CPU scheduler to give uninterrupted calculation timeslices to your current window or shares power equally.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It is 100% safe. Background file downloads might take slightly longer if "Programs" is selected.</p></div>
                             </div>
                         </div>
-                        <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4">
-                            <p class="text-sm text-indigo-800">
-                                <strong class="font-bold">NOTE:</strong> Because this is an OS-level tweak, it works identically across all Ryzen generations without affecting your hardware warranty or thermals.
-                            </p>
+                        <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> Because this is an OS-level tweak, it works identically across all generations without affecting warranty.</p></div>
+                    </div>
+                `;
+            } else if (tweakType === 'startup') {
+                headerText.innerText = `${currentCpuGroup}: Disable Unnecessary Startup Apps`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                                    <source src="videos/Cpu Ryzen uni 3 (6).mp4" type="video/mp4">
+                                </video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users experiencing high background RAM usage, or a sluggish system right after turning on their PC.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents unnecessary applications from automatically launching in the background when Windows starts, freeing up memory and CPU cycles for your actual tasks.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Disabling unnecessary startup apps won't harm system in any way.</p></div>
+                            </div>
                         </div>
+                        <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> You can always re-enable an app later in the Task Manager if you find you need it to start automatically.</p></div>
                     </div>
                 `;
             } else if (tweakType === 'early-balanced') {
@@ -423,32 +426,16 @@
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
-                                    <source src="videos/Cpu Ryzen 2 (3).mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 2 (3).mp4" type="video/mp4"></video>
                                 <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Early AM4 motherboard (AMD 2000/3000 series) users experiencing unusually high idle temperatures and loud fan noise.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It instructs the older Zen/Zen 2 core complexes exactly when to sleep properly, correcting a known gap in the default Windows scheduler.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
-                                    <p class="text-slate-600 mt-1">Ans: None. This is the officially intended and safe operating state for this specific hardware architecture.</p>
-                                </div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Early AM4 motherboard users experiencing unusually high idle temperatures and loud fan noise.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It instructs the older Zen core complexes exactly when to sleep properly, correcting a known gap in the default Windows scheduler.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: None. This is the officially intended and safe operating state.</p></div>
                             </div>
                         </div>
-                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4">
-                            <p class="text-sm text-emerald-800">
-                                <strong class="font-bold">NOTE:</strong> Enabling High Performance might give better performance but can cause rapid increase in temp of cpu with moderate browsing or during moderate multitasking in low end cpus.
-                            </p>
-                        </div>
+                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4"><p class="text-sm text-emerald-800"><strong class="font-bold">NOTE:</strong> Enabling High Performance might give better performance but can cause rapid increase in temp.</p></div>
                     </div>
                 `;
             } else if (tweakType === 'early-minstate') {
@@ -457,32 +444,16 @@
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
-                                    <source src="videos/Cpu Ryzen 2 (4).mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 2 (4).mp4" type="video/mp4"></video>
                                 <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users noticing rapid battery drain or high CPU temperatures during low-intensity tasks like reading documents or web browsing.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents Windows from artificially locking the CPU clock speed at 100%. It allows the hardware to "relax" and downscale power consumption when you aren't doing anything heavy.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
-                                    <p class="text-slate-600 mt-1">Ans: 100% safe. The CPU will still instantly ramp up to maximum speed the moment you start a heavy workload.</p>
-                                </div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users noticing rapid battery drain or high CPU temperatures during low-intensity tasks.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents Windows from artificially locking the CPU clock speed at 100%. It allows the hardware to "relax".</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: 100% safe. The CPU will still instantly ramp up to maximum speed the moment you start a heavy workload.</p></div>
                             </div>
                         </div>
-                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4">
-                            <p class="text-sm text-emerald-800">
-                                <strong class="font-bold">NOTE:</strong> Desktop users will only see a "Plugged in" option under Minimum Processor State. Simply set it to 5% and follow the exact same steps.
-                            </p>
-                        </div>
+                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4"><p class="text-sm text-emerald-800"><strong class="font-bold">NOTE:</strong> Desktop users will only see a "Plugged in" option. Set it to 5%.</p></div>
                     </div>
                 `;
             } else if (tweakType === 'early-coreparking') {
@@ -491,35 +462,22 @@
                     <div class="glass-card overflow-hidden fade-in">
                         <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
                             <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
-                                    <source src="videos/Cpu Ryzen 2 (5).mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 2 (5).mp4" type="video/mp4"></video>
                                 <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who do heavy work and experience "micro-stutters" or tiny freezes when opening new apps and prioritize raw responsiveness and performance over power saving.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4>
-                                    <p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It forces Windows to keep all CPU cores awake and ready to execute instructions, completely eliminating the excess delay caused by waking up sleeping cores.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4>
-                                    <p class="text-slate-600 mt-1">Ans: It will increase your baseline idle temperatures and power consumption. Because the cores never fully go to sleep, they constantly draw power. It's a deliberate trading of high heat with good responsiveness and performance.</p>
-                                </div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who do heavy work and experience "micro-stutters" or tiny freezes and prioritize raw responsiveness over power saving.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It forces Windows to keep all CPU cores awake and ready to execute instructions, completely eliminating excess delay.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will increase your baseline idle temperatures and power consumption. It's a deliberate trading of heat for performance.</p></div>
                             </div>
                         </div>
-                        <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4">
-                            <p class="text-sm text-sky-800">
-                                <strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.
-                            </p>
-                        </div>
+                        <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4"><p class="text-sm text-sky-800"><strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.</p></div>
                     </div>
                 `;
             }
+            
+            // INTEL GUIDES CLEARED: READY FOR NEW ONES
+
         }
     </script>
 </body>
