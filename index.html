@@ -280,7 +280,30 @@
                 </div>
             </div>
 
+            <div id="tweak-next-hags" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('next-hags')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Turn on Hardware Accelerated GPU Scheduling (HAGS)</p></div>
+                </div>
+            </div>
+
             <!-- INTEL TWEAKS CLEARED: READY FOR NEW ONES -->
+            
+            <!-- INTEL: Modern Hybrid (Group 3) -->
+            <div id="tweak-intel-modern-hags" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('intel-modern-hags')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Turn on Hardware Accelerated GPU Scheduling (HAGS)</p></div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -384,6 +407,14 @@
             if (groupName === 'Next-Gen Ryzen') {
                 const nextBoost = document.getElementById('tweak-next-boost');
                 if (nextBoost) nextBoost.classList.remove('hidden');
+                const nextHags = document.getElementById('tweak-next-hags');
+                if (nextHags) nextHags.classList.remove('hidden');
+            }
+
+            // Group 3 Intel specific
+            if (groupName === 'Modern Hybrid Intel') {
+                const intelHags = document.getElementById('tweak-intel-modern-hags');
+                if (intelHags) intelHags.classList.remove('hidden');
             }
             
             // Semi-Universal: Show Startup Apps tweak ONLY for the first two groups of AMD and Intel
@@ -560,6 +591,42 @@
                             </ul>
                             <p>Users can adjust the boost mode according to their needs depending on whether they prefer maximum performance, balanced efficiency, or lower temperatures and better battery life.</p>
                         </div>
+                    </div>
+                `;
+            } else if (tweakType === 'next-hags') {
+                headerText.innerText = `${currentCpuGroup}: Hardware Accelerated GPU Scheduling (HAGS)`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (4).mp4" type="video/mp4"></video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this optimization?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who run applications that frequently utilize GPU processing along with the CPU may benefit from this optimization, as it helps reduce CPU involvement in graphics workload scheduling.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Hardware Accelerated GPU Scheduling shifts part of the graphics task scheduling process from the CPU to the GPU. By allowing the GPU to manage its own task queue, the CPU performs fewer scheduling operations related to graphics workloads, which can reduce CPU overhead.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact in most situations. In some workloads the difference may be minimal because the optimization mainly affects how graphics tasks are scheduled rather than the computational capability of the CPU.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
+                    </div>
+                `;
+            } else if (tweakType === 'intel-modern-hags') {
+                headerText.innerText = `${currentCpuGroup}: Hardware Accelerated GPU Scheduling (HAGS)`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (4).mp4" type="video/mp4"></video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this optimization?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who run applications that frequently utilize GPU processing along with the CPU may benefit from this optimization, as it helps reduce CPU involvement in graphics workload scheduling.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Hardware Accelerated GPU Scheduling shifts part of the graphics task scheduling process from the CPU to the GPU. By allowing the GPU to manage its own task queue, the CPU performs fewer scheduling operations related to graphics workloads, which can reduce CPU overhead.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact in most situations. In some workloads the difference may be minimal because the optimization mainly affects how graphics tasks are scheduled rather than the computational capability of the CPU.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4"><p class="text-sm text-blue-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
                     </div>
                 `;
             }
