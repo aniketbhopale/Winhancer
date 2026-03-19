@@ -71,29 +71,26 @@
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">CPU Diagnostics</h2>
-                <p class="text-slate-500">Processor affinity, voltage tuning, and scheduling profiles.</p>
             </div>
             
-            <!-- GPU Block -->
-            <div class="glass-card p-8">
-                <div class="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6">
+            <!-- GPU Block (NOW WIRED UP) -->
+            <div onclick="navigate('gpuPage')" class="glass-card interactive-card p-8 group">
+                <div class="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">GPU Acceleration</h2>
-                <p class="text-slate-500">Frame timing, driver latency, and rendering optimizations.</p>
             </div>
             
             <!-- RAM Block -->
-            <div class="glass-card p-8">
-                <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6">
+            <div onclick="navigate('ramPage')" class="glass-card interactive-card p-8 group">
+                <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7h16v10H4zM4 11h16M8 17v-2m4 2v-2m4 2v-2" />
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">Memory Allocation</h2>
-                <p class="text-slate-500">Pagefile tuning, XMP profiles, and caching configurations.</p>
             </div>
             
             <!-- Disk Block -->
@@ -104,7 +101,6 @@
                     </svg>
                 </div>
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">Storage IOPS</h2>
-                <p class="text-slate-500">TRIM controls, indexing strategies, and NVMe setups.</p>
             </div>
         </div>
     </div>
@@ -138,15 +134,15 @@
         <div id="amdSeriesSelection" class="hidden">
             <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Ryzen Generation</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early-Gen Ryzen')">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early-Gen Ryzen', 'cpu')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Early-Gen Ryzen</div>
                     <p class="text-sm text-slate-500">2000 & 3000 Series</p>
                 </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Mid-Gen Ryzen')">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Mid-Gen Ryzen', 'cpu')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Mid-Gen Ryzen</div>
                     <p class="text-sm text-slate-500">4000 & 5000 Series</p>
                 </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Next-Gen Ryzen')">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Next-Gen Ryzen', 'cpu')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Next-Gen Ryzen</div>
                     <p class="text-sm text-slate-500">6000 Series & Newer</p>
                 </div>
@@ -156,22 +152,90 @@
         <div id="intelSeriesSelection" class="hidden">
             <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Intel Generation</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Legacy Intel')">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Legacy Intel', 'cpu')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Legacy & Pre-Hybrid</div>
                     <p class="text-sm text-slate-500">8th, 9th, 10th Gen</p>
                 </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early Hybrid Intel')">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early Hybrid Intel', 'cpu')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Early Hybrid</div>
                     <p class="text-sm text-slate-500">11th & 12th Gen</p>
                 </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Modern Hybrid Intel')">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Modern Hybrid Intel', 'cpu')">
                     <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Modern Hybrid & Ultra</div>
                     <p class="text-sm text-slate-500">13th, 14th Gen & Core Ultra</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- GPU Selection Flow -->
+    <div id="gpuPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
+        <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            System Overview
+        </button>
+        
+        <div id="gpuBrandSelection">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">Select Graphics Architecture</h2>
+                <p class="text-slate-500">Choose your GPU manufacturer to load specific rendering tweaks.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- NVIDIA -->
+                <div class="glass-card interactive-card p-6 text-center group" onclick="selectGpuBrand('nvidia')">
+                    <div class="text-green-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-green-700 transition-colors">NVIDIA</div>
+                    <p class="text-sm text-slate-500">GeForce / Quadro Architecture</p>
+                </div>
+                <!-- AMD GPU (Static for now) -->
+                <div class="glass-card p-6 text-center">
+                    <div class="text-red-600 font-bold text-2xl mb-2 tracking-wider">AMD</div>
+                    <p class="text-sm text-slate-500">Radeon Architecture</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="nvidiaSeriesSelection" class="hidden">
+            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select NVIDIA Generation</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('GTX, early rtx (20)', 'gpu')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-emerald-600 transition-colors">GTX & Early RTX</div>
+                    <p class="text-sm text-slate-500">GTX 10/16 Series & RTX 20 Series</p>
+                </div>
+                
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('RTX 30/40/50', 'gpu')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-emerald-600 transition-colors">Modern RTX</div>
+                    <p class="text-sm text-slate-500">RTX 30 / 40 / 50 Series</p>
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <!-- RAM Selection Flow -->
+    <div id="ramPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
+        <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            System Overview
+        </button>
+        
+        <div id="ramSizeSelection">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">Select System Memory Capacity</h2>
+                <p class="text-slate-500">Choose your installed RAM capacity to load specific paging and cache tweaks.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('6GB or less than 6 GB', 'ram')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-purple-600 transition-colors">6GB or Less</div>
+                    <p class="text-sm text-slate-500">Low Capacity Memory</p>
+                </div>
+                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('8GB or More than 8GB', 'ram')">
+                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-purple-600 transition-colors">8GB or More</div>
+                    <p class="text-sm text-slate-500">Standard / High Capacity Memory</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Tweak List Page -->
     <div id="tweaksListPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
         <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
@@ -187,7 +251,7 @@
         <div id="tweaksList" class="space-y-4">
             
             <!-- Universal Tweaks (Always Visible) -->
-            <div class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" onclick="showGuide('visual')">
+            <div id="tweak-univ-visual" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('visual')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
@@ -198,7 +262,7 @@
                 </div>
             </div>
 
-            <div class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in" style="animation-delay: 0.1s;" onclick="showGuide('foreground')">
+            <div id="tweak-univ-foreground" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" style="animation-delay: 0.1s;" onclick="showGuide('foreground')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
                         <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
@@ -291,8 +355,6 @@
                 </div>
             </div>
 
-            <!-- INTEL TWEAKS CLEARED: READY FOR NEW ONES -->
-            
             <!-- INTEL: Modern Hybrid (Group 3) -->
             <div id="tweak-intel-modern-hags" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('intel-modern-hags')">
                 <div class="flex items-start gap-4">
@@ -302,6 +364,49 @@
                         </div>
                     </div>
                     <div><p class="text-slate-800 font-medium leading-relaxed">Turn on Hardware Accelerated GPU Scheduling (HAGS)</p></div>
+                </div>
+            </div>
+
+            <!-- GPU Presets (NVIDIA) -->
+            <div id="tweak-gpu-battery" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('gpu-battery')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-bold leading-relaxed">Battery Saving</p>
+                        <p class="text-sm text-slate-500 font-medium mt-1">Comparatively less heat, battery consumption and fan noise.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tweak-gpu-balanced" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('gpu-balanced')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-bold leading-relaxed">Balanced Workload</p>
+                        <p class="text-sm text-slate-500 font-medium mt-1">Optimal balance between graphics performance and power usage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tweak-gpu-performance" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('gpu-performance')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-bold leading-relaxed">High Performance (Best Visuals)</p>
+                        <p class="text-sm text-slate-500 font-medium mt-1">Comparatively more heat, battery usage and fan noise.</p>
+                    </div>
                 </div>
             </div>
 
@@ -344,10 +449,11 @@
             });
 
             const targetPage = document.getElementById(pageId);
-            targetPage.classList.remove('hidden');
-            
-            void targetPage.offsetWidth; 
-            targetPage.classList.add('fade-in');
+            if(targetPage) {
+                targetPage.classList.remove('hidden');
+                void targetPage.offsetWidth; 
+                targetPage.classList.add('fade-in');
+            }
 
             if (pageId === 'mainPage') {
                 resetSelections();
@@ -355,73 +461,121 @@
         }
 
         function resetSelections() {
-            document.getElementById('cpuBrandSelection').classList.remove('hidden');
-            document.getElementById('amdSeriesSelection').classList.add('hidden');
-            document.getElementById('intelSeriesSelection').classList.add('hidden');
+            // CPU sections
+            const cpuBrand = document.getElementById('cpuBrandSelection');
+            if (cpuBrand) cpuBrand.classList.remove('hidden');
+            const amdSeries = document.getElementById('amdSeriesSelection');
+            if (amdSeries) amdSeries.classList.add('hidden');
+            const intelSeries = document.getElementById('intelSeriesSelection');
+            if (intelSeries) intelSeries.classList.add('hidden');
+
+            // GPU sections
+            const gpuBrand = document.getElementById('gpuBrandSelection');
+            if (gpuBrand) gpuBrand.classList.remove('hidden');
+            const nvidiaSeries = document.getElementById('nvidiaSeriesSelection');
+            if (nvidiaSeries) nvidiaSeries.classList.add('hidden');
+            
+            // RAM sections
+            const ramSize = document.getElementById('ramSizeSelection');
+            if (ramSize) ramSize.classList.remove('hidden');
         }
         
         function selectCpuBrand(brand) {
-            document.getElementById('cpuBrandSelection').classList.add('hidden');
+            const brandSelection = document.getElementById('cpuBrandSelection');
+            if (brandSelection) brandSelection.classList.add('hidden');
+            
             if (brand === 'amd') {
                 const target = document.getElementById('amdSeriesSelection');
-                target.classList.remove('hidden');
-                target.classList.add('fade-in');
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.add('fade-in');
+                }
             } else if (brand === 'intel') {
                 const target = document.getElementById('intelSeriesSelection');
-                target.classList.remove('hidden');
-                target.classList.add('fade-in');
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.add('fade-in');
+                }
+            }
+        }
+
+        function selectGpuBrand(brand) {
+            const brandSelection = document.getElementById('gpuBrandSelection');
+            if (brandSelection) brandSelection.classList.add('hidden');
+
+            if (brand === 'nvidia') {
+                const target = document.getElementById('nvidiaSeriesSelection');
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.add('fade-in');
+                }
             }
         }
         
-        function showTweakList(groupName) {
+        function showTweakList(groupName, component = 'cpu') {
             currentCpuGroup = groupName;
-            document.getElementById('tweakListSubtitle').innerText = `Architecture: ${groupName}. Select a specific optimization to view its detailed guide.`;
             
-            // Hide all brand-specific tweaks first
+            let architectureText = component === 'cpu' ? 'CPU Architecture' : (component === 'gpu' ? 'GPU Architecture' : 'Memory Capacity');
+            const subtitle = document.getElementById('tweakListSubtitle');
+            if (subtitle) subtitle.innerText = `${architectureText}: ${groupName}. Select a specific optimization to view its detailed guide.`;
+            
+            // Hide all tweak cards initially
             document.querySelectorAll('.tweak-card').forEach(card => {
-                // Keep the universal ones visible, hide everything that starts with 'tweak-'
-                if (card.id && card.id.startsWith('tweak-')) {
-                    card.classList.add('hidden');
-                }
+                card.classList.add('hidden');
             });
             
-            // Route dynamically
-            if (groupName === 'Early-Gen Ryzen') {
-                document.getElementById('tweak-early-balanced').classList.remove('hidden');
-                document.getElementById('tweak-early-minstate').classList.remove('hidden');
-            }
-            
-            // Group 2 Shared Tweak (AMD Mid-Gen & Intel Early Hybrid)
-            if (groupName === 'Mid-Gen Ryzen' || groupName === 'Early Hybrid Intel') {
-                const midBalanced = document.getElementById('tweak-mid-balanced');
-                if (midBalanced) midBalanced.classList.remove('hidden');
-            }
+            if (component === 'cpu') {
+                // Show universal CPU tweaks
+                const visualTweak = document.getElementById('tweak-univ-visual');
+                if(visualTweak) visualTweak.classList.remove('hidden');
+                const foregroundTweak = document.getElementById('tweak-univ-foreground');
+                if(foregroundTweak) foregroundTweak.classList.remove('hidden');
 
-            // Group 2 AMD specific
-            if (groupName === 'Mid-Gen Ryzen') {
-                const midCoreParking = document.getElementById('tweak-mid-coreparking');
-                if (midCoreParking) midCoreParking.classList.remove('hidden');
-            }
-            
-            // Group 3 AMD specific
-            if (groupName === 'Next-Gen Ryzen') {
-                const nextBoost = document.getElementById('tweak-next-boost');
-                if (nextBoost) nextBoost.classList.remove('hidden');
-                const nextHags = document.getElementById('tweak-next-hags');
-                if (nextHags) nextHags.classList.remove('hidden');
-            }
+                // Route dynamically based on CPU
+                if (groupName === 'Early-Gen Ryzen') {
+                    const t1 = document.getElementById('tweak-early-balanced');
+                    if(t1) t1.classList.remove('hidden');
+                    const t2 = document.getElementById('tweak-early-minstate');
+                    if(t2) t2.classList.remove('hidden');
+                }
+                
+                if (groupName === 'Mid-Gen Ryzen' || groupName === 'Early Hybrid Intel') {
+                    const midBalanced = document.getElementById('tweak-mid-balanced');
+                    if (midBalanced) midBalanced.classList.remove('hidden');
+                }
 
-            // Group 3 Intel specific
-            if (groupName === 'Modern Hybrid Intel') {
-                const intelHags = document.getElementById('tweak-intel-modern-hags');
-                if (intelHags) intelHags.classList.remove('hidden');
-            }
-            
-            // Semi-Universal: Show Startup Apps tweak ONLY for the first two groups of AMD and Intel
-            const startupAppGroups = ['Early-Gen Ryzen', 'Mid-Gen Ryzen', 'Legacy Intel', 'Early Hybrid Intel'];
-            if (startupAppGroups.includes(groupName)) {
-                const startupTweak = document.getElementById('tweak-startup-apps');
-                if(startupTweak) startupTweak.classList.remove('hidden');
+                if (groupName === 'Mid-Gen Ryzen') {
+                    const midCoreParking = document.getElementById('tweak-mid-coreparking');
+                    if (midCoreParking) midCoreParking.classList.remove('hidden');
+                }
+                
+                if (groupName === 'Next-Gen Ryzen') {
+                    const nextBoost = document.getElementById('tweak-next-boost');
+                    if (nextBoost) nextBoost.classList.remove('hidden');
+                    const nextHags = document.getElementById('tweak-next-hags');
+                    if (nextHags) nextHags.classList.remove('hidden');
+                }
+
+                if (groupName === 'Modern Hybrid Intel') {
+                    const intelHags = document.getElementById('tweak-intel-modern-hags');
+                    if (intelHags) intelHags.classList.remove('hidden');
+                }
+                
+                const startupAppGroups = ['Early-Gen Ryzen', 'Mid-Gen Ryzen', 'Legacy Intel', 'Early Hybrid Intel'];
+                if (startupAppGroups.includes(groupName)) {
+                    const startupTweak = document.getElementById('tweak-startup-apps');
+                    if(startupTweak) startupTweak.classList.remove('hidden');
+                }
+            } 
+            else if (component === 'gpu') {
+                if (groupName === 'GTX, early rtx (20)' || groupName === 'RTX 30/40/50') {
+                    const g1 = document.getElementById('tweak-gpu-battery');
+                    if(g1) g1.classList.remove('hidden');
+                    const g2 = document.getElementById('tweak-gpu-balanced');
+                    if(g2) g2.classList.remove('hidden');
+                    const g3 = document.getElementById('tweak-gpu-performance');
+                    if(g3) g3.classList.remove('hidden');
+                }
             }
 
             navigate('tweaksListPage');
@@ -432,7 +586,7 @@
             const guideContainer = document.getElementById('guideContent');
             const headerText = document.getElementById('guideSubtitle');
             
-            // ================== UNIVERSAL & AMD ==================
+            // ================== CPU GUIDES ==================
             if (tweakType === 'visual') {
                 headerText.innerText = `${currentCpuGroup}: Adjust Windows Visual Effects`;
                 guideContainer.innerHTML = `
@@ -540,11 +694,15 @@
                             </div>
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
                                 <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who do heavy work and experience "micro-stutters" or tiny freezes and prioritize raw responsiveness over power saving.</p></div>
-                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It forces Windows to keep all CPU cores awake and ready to execute instructions, completely eliminating excess delay.</p></div>
-                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will increase your baseline idle temperatures and power consumption. It's a deliberate trading of heat for performance.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It forces Windows to keep all CPU cores awake and ready to execute instructions, completely eliminating the excess delay caused by waking up sleeping cores.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will increase your baseline idle temperatures and power consumption. Because the cores never fully go to sleep, they constantly draw power. It's a deliberate trading of high heat with good responsiveness and performance.</p></div>
                             </div>
                         </div>
-                        <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4"><p class="text-sm text-sky-800"><strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.</p></div>
+                        <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4">
+                            <p class="text-sm text-sky-800">
+                                <strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.
+                            </p>
+                        </div>
                     </div>
                 `;
             } else if (tweakType === 'mid-balanced') {
@@ -630,9 +788,18 @@
                     </div>
                 `;
             }
-            
-            // INTEL GUIDES CLEARED: READY FOR NEW ONES
 
+            // ================== GPU GUIDES ==================
+            else if (tweakType === 'gpu-battery') {
+                headerText.innerText = `${currentCpuGroup}: Battery Saving Preset`;
+                guideContainer.innerHTML = `<div class="glass-card p-8 text-center text-slate-500 fade-in"><p class="text-xl font-semibold mb-2">Battery Saving Guide Details</p></div>`;
+            } else if (tweakType === 'gpu-balanced') {
+                headerText.innerText = `${currentCpuGroup}: Balanced Workload Preset`;
+                guideContainer.innerHTML = `<div class="glass-card p-8 text-center text-slate-500 fade-in"><p class="text-xl font-semibold mb-2">Balanced Workload Guide Details</p></div>`;
+            } else if (tweakType === 'gpu-performance') {
+                headerText.innerText = `${currentCpuGroup}: High Performance Preset`;
+                guideContainer.innerHTML = `<div class="glass-card p-8 text-center text-slate-500 fade-in"><p class="text-xl font-semibold mb-2">High Performance Guide Details</p></div>`;
+            }
         }
     </script>
 </body>
