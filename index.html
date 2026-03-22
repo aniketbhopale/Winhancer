@@ -193,22 +193,6 @@
                 </div>
             </div>
         </div>
-        
-        <div id="nvidiaSeriesSelection" class="hidden">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select NVIDIA Generation</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('GTX, early rtx (20)', 'gpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-emerald-600 transition-colors">GTX & Early RTX</div>
-                    <p class="text-sm text-slate-500">GTX 10/16 Series & RTX 20 Series</p>
-                </div>
-                
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('RTX 30/40/50', 'gpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-emerald-600 transition-colors">Modern RTX</div>
-                    <p class="text-sm text-slate-500">RTX 30 / 40 / 50 Series</p>
-                </div>
-            </div>
-        </div>
     </div>
     
     <!-- RAM Selection Flow -->
@@ -472,8 +456,6 @@
             // GPU sections
             const gpuBrand = document.getElementById('gpuBrandSelection');
             if (gpuBrand) gpuBrand.classList.remove('hidden');
-            const nvidiaSeries = document.getElementById('nvidiaSeriesSelection');
-            if (nvidiaSeries) nvidiaSeries.classList.add('hidden');
             
             // RAM sections
             const ramSize = document.getElementById('ramSizeSelection');
@@ -504,11 +486,7 @@
             if (brandSelection) brandSelection.classList.add('hidden');
 
             if (brand === 'nvidia') {
-                const target = document.getElementById('nvidiaSeriesSelection');
-                if (target) {
-                    target.classList.remove('hidden');
-                    target.classList.add('fade-in');
-                }
+                showTweakList('NVIDIA', 'gpu');
             }
         }
         
@@ -568,7 +546,7 @@
                 }
             } 
             else if (component === 'gpu') {
-                if (groupName === 'GTX, early rtx (20)' || groupName === 'RTX 30/40/50') {
+                if (groupName === 'NVIDIA') {
                     const g1 = document.getElementById('tweak-gpu-battery');
                     if(g1) g1.classList.remove('hidden');
                     const g2 = document.getElementById('tweak-gpu-balanced');
@@ -792,13 +770,105 @@
             // ================== GPU GUIDES ==================
             else if (tweakType === 'gpu-battery') {
                 headerText.innerText = `${currentCpuGroup}: Battery Saving Preset`;
-                guideContainer.innerHTML = `<div class="glass-card p-8 text-center text-slate-500 fade-in"><p class="text-xl font-semibold mb-2">Battery Saving Guide Details</p></div>`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                                    <source src="videos/nv low.mp4" type="video/mp4">
+                                </video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for laptop users running on battery power or users dealing with severe overheating issues who want to maximize their device's lifespan.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It aggressively limits frame rates, reduces texture filtering quality, and enables power-saving states to drastically lower GPU usage, power draw, and fan noise.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Yes, visual quality will be noticeably reduced, and frame rates will be capped at a lower threshold, which may feel less smooth.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-6 text-sm text-emerald-800">
+                            <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                            <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-emerald-200">
+                                <ul class="list-disc pl-5 space-y-3">
+                                    <li><strong>Power Management Mode (Optimal power / Normal):</strong> Allows the GPU to aggressively downclock during lighter rendering workloads. This minimizes power consumption and thermal output when absolute maximum compute performance is not required.</li>
+                                    <li><strong>Low Latency Mode (Off):</strong> Disables aggressive frame queuing from the CPU. This reduces unnecessary CPU-GPU synchronization overhead, significantly lowering overall system power draw and heat generation during operation.</li>
+                                    <li><strong>Max Frame Rate (30–45 FPS):</strong> Strictly caps maximum rendered frames. This acts as a hard limit on GPU utilization, preventing runaway power consumption and drastically extending battery lifespan during intensive 3D tasks.</li>
+                                    <li><strong>Background Application Max Frame Rate (20 FPS):</strong> Limits rendering speed for minimized applications. Ensures background 3D workloads do not needlessly drain system battery while you focus on primary foreground tasks.</li>
+                                    <li><strong>Vertical Sync (On):</strong> Synchronizes frame delivery with your display's refresh rate. Eliminates screen tearing and prevents the GPU from wasting critical battery power rendering unseen, excess frames.</li>
+                                    <li><strong>Shader Cache Size (Driver Default):</strong> Keeps compiled shaders on storage using default limits. This ensures stutter-free operation in 3D applications without consuming excessive disk space or requiring heavy background processing.</li>
+                                    <li><strong>CUDA – GPUs (All):</strong> Permits the system to utilize all available CUDA cores. Ensures parallel compute applications can process efficiently without forcing artificial bottlenecks that might prolong active task times.</li>
+                                    <li><strong>OpenGL GDI Compatibility (Auto):</strong> Automatically manages OpenGL interactions with Windows. Ensures maximum compatibility and stability across various applications without adding unnecessary rendering overhead.</li>
+                                    <li><strong>Vulkan/OpenGL Present Method (Auto):</strong> Lets the driver select the optimal frame presentation method. Guarantees stability in modern graphics APIs while safely managing power delivery and presentation cycles.</li>
+                                    <li><strong>Anisotropic Filtering (Application-controlled / Off):</strong> Manages distant texture clarity. Letting the application decide or keeping it off prevents the driver from forcing heavy rendering loads, directly conserving battery power.</li>
+                                    <li><strong>NVIDIA Image Scaling (NIS) (On - light scaling):</strong> <em>(Note: If available in Nvidia app then select On with light scale)</em>. Offers a massive performance boost by rendering at lower resolutions, saving immense battery power while maintaining visual clarity.</li>
+                                    <li><strong>Antialiasing - FXAA (Off):</strong> A post-processing anti-aliasing method. Disabling this saves compute resources and prevents blurring, leaving edge-smoothing to more efficient, native application-level engines.</li>
+                                    <li><strong>Antialiasing - Transparency (Off):</strong> Smooths transparent texture edges. Disabling this saves significant GPU bandwidth and processing power, as it is notoriously resource-heavy for minimal visual gain.</li>
+                                    <li><strong>Antialiasing - MFAA (Off):</strong> An Nvidia-specific anti-aliasing technique. Keeping it off maintains strict baseline power efficiency and prevents unexpected performance dips or power spikes in unsupported software.</li>
+                                    <li><strong>Texture Filtering – Quality (High Performance):</strong> Alters texture filtering algorithms. Prioritizes raw rendering speed over minor visual details, significantly lowering the GPU compute workload to maximize battery conservation.</li>
+                                    <li><strong>Texture Filtering – Negative LOD Bias (Clamp):</strong> Prevents texture aliasing when filtering quality is lowered. Clamping ensures textures remain stable and do not shimmer during viewport movement, maintaining acceptable visuals.</li>
+                                    <li><strong>Texture Filtering – Trilinear Optimization (Off):</strong> A bilinear filtering shortcut. Turning this off prevents potential visual artifacts when forcing high-performance texture profiles, keeping the visual baseline clean.</li>
+                                    <li><strong>Texture Filtering – Anisotropic Sample Optimization (Off):</strong> Limits anisotropic samples based on pixel size. Keeping it off avoids texture shimmering issues, ensuring basic image quality does not degrade excessively.</li>
+                                    <li><strong>Triple Buffering (Off):</strong> Adds an extra frame buffer for OpenGL. Keeping this off saves Video RAM (VRAM) bandwidth and reduces overall power consumption associated with heavy traditional V-Sync buffering.</li>
+                                    <li><strong>Threaded Optimization (Auto):</strong> Allows multithreaded optimizations. Leaving it on auto lets the driver safely decide when to use multiple CPU cores, avoiding unnecessary system-wide power spikes.</li>
+                                    <li><strong>PhysX (Auto):</strong> Handles complex physics calculations. Auto ensures the system intelligently delegates these tasks to the CPU or GPU based on workload, optimizing overall system efficiency.</li>
+                                    <li><strong>WhisperMode (On, 30–45 FPS):</strong> <em>(Note: If available in Nvidia app then select On)</em>. Intelligently paces frame delivery on laptops. Drastically reduces cooling fan noise and keeps battery consumption and hardware temperatures at a minimum.</li>
+                                    <li><strong>BatteryBoost (On):</strong> <em>(Note: If available in Nvidia app then select On)</em>. Optimizes GPU power states when unplugged. Strictly extends battery life by dynamically adjusting performance and power limits when disconnected from a charger.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
             } else if (tweakType === 'gpu-balanced') {
                 headerText.innerText = `${currentCpuGroup}: Balanced Workload Preset`;
-                guideContainer.innerHTML = `<div class="glass-card p-8 text-center text-slate-500 fade-in"><p class="text-xl font-semibold mb-2">Balanced Workload Guide Details</p></div>`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                                    <source src="videos/nv bal.mp4" type="video/mp4">
+                                </video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Perfect for the average user who wants a smooth, high-quality visual experience without pushing their GPU to its absolute thermal limits.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It finds the sweet spot by capping frames at a comfortable level, adjusting texture filtering for speed, and balancing power states to maintain stability and efficiency.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It prevents the GPU from reaching maximum possible frame rates, which might not be ideal for competitive esports players needing minimal input lag.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-6 text-sm text-emerald-800">
+                            <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                            <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-emerald-200">
+                                <ul class="list-disc pl-5 space-y-3">
+                                    <li><strong>Power Management Mode (Optimal Power):</strong> Dynamically adjusts GPU clock speeds based on current workload. This balances high performance during intensive tasks with power efficiency during lighter tasks to prevent unnecessary heat.</li>
+                                    <li><strong>Low Latency Mode (On):</strong> Limits the queued frames prepared by the CPU. Turning this on reduces input lag for a snappier, more responsive feel without maxing out CPU utilization.</li>
+                                    <li><strong>Max Frame Rate (60 FPS / Refresh Rate):</strong> Caps the maximum frames rendered. This ensures a perfectly smooth, consistent experience matching your monitor while preventing the GPU from overworking and overheating unnecessarily.</li>
+                                    <li><strong>Background App Max Frame Rate (20 FPS):</strong> Restricts frame rates for minimized applications. This stops background 3D tasks from consuming valuable resources, keeping your system cool and efficient while multitasking.</li>
+                                    <li><strong>Vertical Sync (Fast / Off):</strong> Fast sync renders frames unconstrained but only displays the latest one. This eliminates screen tearing without the heavy input lag associated with traditional V-Sync.</li>
+                                    <li><strong>Shader Cache Size (Unlimited):</strong> Stores compiled shaders continuously on your storage drive. This effectively eliminates stuttering caused by shader compilation in modern 3D software, ensuring consistently smooth operation.</li>
+                                    <li><strong>CUDA – GPUs (All):</strong> Enables all available CUDA cores for compute workloads. This guarantees applications relying on GPU acceleration have full access to your hardware's processing power.</li>
+                                    <li><strong>OpenGL GDI Compatibility (Auto):</strong> Automatically manages OpenGL interaction with Windows. Keeping this on Auto ensures seamless compatibility and prevents visual glitches in rendering applications.</li>
+                                    <li><strong>Vulkan/OpenGL Present Method (Auto):</strong> Lets the driver select the best frame presentation technique. This maximizes compatibility and performance stability across modern graphics APIs.</li>
+                                    <li><strong>Anisotropic Filtering (App-controlled / 8x):</strong> Enhances the clarity of distant textures at oblique angles. Leaving it app-controlled or at 8x balances excellent visual sharpness with minimal performance overhead.</li>
+                                    <li><strong>NVIDIA Image Scaling (NIS) (Optional):</strong> <em>(Note: If available in Nvidia app, select Optional or On with light scaling)</em>. Upscales heavy applications from a lower rendering resolution. This provides a substantial frame rate boost while maintaining decent visual quality.</li>
+                                    <li><strong>Antialiasing - FXAA (Off):</strong> A post-process smoothing technique. Disabling FXAA prevents the screen from looking overly blurry, leaving superior anti-aliasing methods to the software engine itself.</li>
+                                    <li><strong>Antialiasing - Transparency (Off):</strong> Smooths transparent textures like foliage. Turning this off saves significant GPU bandwidth, as it demands heavy processing power for relatively minor visual improvements.</li>
+                                    <li><strong>Multi-Frame Sampled AA (MFAA) (On):</strong> Nvidia's Multi-Frame Sampled Anti-Aliasing. Enabling this provides high-quality edge smoothing comparable to MSAA but at a much lower performance cost, improving overall efficiency.</li>
+                                    <li><strong>Texture Filtering – Quality (Quality):</strong> Balances texture rendering algorithms. "Quality" is the ideal middle ground, ensuring rendered textures look crisp and detailed without unnecessarily taxing the GPU.</li>
+                                    <li><strong>Texture Filtering – Negative LOD Bias (Clamp):</strong> Prevents textures from crawling or shimmering when filtering settings are adjusted. Clamping ensures a stable, clean visual image during fast viewport movement.</li>
+                                    <li><strong>Texture Filtering – Trilinear Optimization (On):</strong> Enables a bilinear filtering shortcut on certain textures. Turning this on provides a free performance boost with almost zero noticeable loss in visual quality.</li>
+                                    <li><strong>Texture Filtering – Anisotropic Sample Optimization (On):</strong> Reduces the number of anisotropic samples used based on pixel size. This increases performance seamlessly while maintaining excellent overall texture sharpness.</li>
+                                    <li><strong>Triple Buffering (Off):</strong> Adds a third frame buffer for OpenGL. Keeping this off minimizes Video RAM (VRAM) usage and reduces input delay since we aren't using traditional V-Sync.</li>
+                                    <li><strong>Threaded Optimization (Auto):</strong> Allows the GPU driver to offload tasks across multiple CPU cores. Auto lets the driver safely optimize performance for older OpenGL applications without causing instability.</li>
+                                    <li><strong>PhysX (Auto):</strong> Handles complex physics calculations. Auto intelligently delegates these tasks to the GPU or CPU depending on current system load to maintain balanced performance.</li>
+                                    <li><strong>WhisperMode (45–60 FPS):</strong> Intelligently paces frame delivery on laptops. This provides a smooth visual experience while significantly reducing cooling fan noise and keeping temperatures under control.</li>
+                                    <li><strong>BatteryBoost (Off):</strong> Disables aggressive battery-saving limits when unplugged. Turning this off ensures you maintain smooth, consistent frame rates and optimal performance even under heavy loads on battery.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
             } else if (tweakType === 'gpu-performance') {
                 headerText.innerText = `${currentCpuGroup}: High Performance Preset`;
-                guideContainer.innerHTML = `<div class="glass-card p-8 text-center text-slate-500 fade-in"><p class="text-xl font-semibold mb-2">High Performance Guide Details</p></div>`;
+                guideContainer.innerHTML = ``;
             }
         }
     </script>
