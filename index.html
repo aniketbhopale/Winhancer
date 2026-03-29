@@ -53,11 +53,14 @@
     <!-- Main Selection Page -->
     <div id="mainPage" class="page-container container mx-auto px-4 py-16 max-w-5xl fade-in">
         <div class="text-center mb-16">
-            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-4">
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-3">
                 Win<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">hancer</span>
             </h1>
+            <p class="text-lg font-semibold text-indigo-600 mb-6 tracking-wide uppercase text-sm">
+                Your guide for optimized performance!
+            </p>
             <p class="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto">
-                Select a hardware component to access configuration tweaks and performance optimizations.
+                Select a component to access configurations and performance optimizations.
             </p>
         </div>
         
@@ -69,7 +72,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold mb-2 text-slate-800">CPU Diagnostics</h2>
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">CPU Optimizations</h2>
             </div>
             
             <!-- GPU Block -->
@@ -79,7 +82,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold mb-2 text-slate-800">GPU Acceleration</h2>
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">GPU Optimizations</h2>
             </div>
             
             <!-- RAM Block -->
@@ -89,7 +92,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7h16v10H4zM4 11h16M8 17v-2m4 2v-2m4 2v-2" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold mb-2 text-slate-800">Memory Allocation</h2>
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">Memory allocation (RAM)</h2>
             </div>
             
             <!-- Disk Block -->
@@ -99,7 +102,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2 1.5 3 4 3h8c2.5 0 4-1 4-3V7c0-2-1.5-3-4-3H8C5.5 4 4 5 4 7zm0 4h16M8 15h.01M12 15h.01M16 15h.01" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold mb-2 text-slate-800">Storage IOPS</h2>
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">Disk/Storage Optimizations</h2>
             </div>
         </div>
     </div>
@@ -117,13 +120,11 @@
                 <p class="text-slate-500">Choose your manufacturer to load specific instruction sets.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group" onclick="selectCpuBrand('intel')">
-                    <div class="text-blue-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-blue-700 transition-colors">INTEL</div>
-                    <p class="text-sm text-slate-500">Core / Xeon Architecture</p>
+                <div class="glass-card interactive-card p-6 flex items-center justify-center h-32 group" onclick="selectCpuBrand('intel')">
+                    <div class="text-blue-600 font-bold text-3xl tracking-wider group-hover:text-blue-700 transition-colors">INTEL</div>
                 </div>
-                <div class="glass-card interactive-card p-6 text-center group" onclick="selectCpuBrand('amd')">
-                    <div class="text-red-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-red-700 transition-colors">AMD</div>
-                    <p class="text-sm text-slate-500">Ryzen / Threadripper Architecture</p>
+                <div class="glass-card interactive-card p-6 flex items-center justify-center h-32 group" onclick="selectCpuBrand('amd')">
+                    <div class="text-red-600 font-bold text-3xl tracking-wider group-hover:text-red-700 transition-colors">AMD</div>
                 </div>
             </div>
         </div>
@@ -178,13 +179,11 @@
                 <p class="text-slate-500">Choose your GPU manufacturer to load specific rendering tweaks.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group" onclick="selectGpuBrand('nvidia')">
-                    <div class="text-green-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-green-700 transition-colors">NVIDIA</div>
-                    <p class="text-sm text-slate-500">GeForce / Quadro Architecture</p>
+                <div class="glass-card interactive-card p-6 flex items-center justify-center h-32 group" onclick="selectGpuBrand('nvidia')">
+                    <div class="text-green-600 font-bold text-3xl tracking-wider group-hover:text-green-700 transition-colors">NVIDIA</div>
                 </div>
-                <div class="glass-card interactive-card p-6 text-center group" onclick="selectGpuBrand('amd')">
-                    <div class="text-red-600 font-bold text-2xl mb-2 tracking-wider group-hover:text-red-700 transition-colors">AMD</div>
-                    <p class="text-sm text-slate-500">Radeon Architecture</p>
+                <div class="glass-card interactive-card p-6 flex items-center justify-center h-32 group" onclick="selectGpuBrand('amd')">
+                    <div class="text-red-600 font-bold text-3xl tracking-wider group-hover:text-red-700 transition-colors">AMD</div>
                 </div>
             </div>
         </div>
@@ -1159,7 +1158,7 @@
                             <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
                                 <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for power users, 3D artists, and enthusiasts with excellent cooling who want absolute maximum rendering speeds and visual fidelity.</p></div>
                                 <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Disables all power-saving constraints, forces the highest texture quality, and safely overclocks the core and memory for unconstrained performance.</p></div>
-                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Drastically increases power consumption, significantly raises system temperatures, and causes very loud fan noise. Highly discouraged on battery.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Drastically increases power consumption, significantly raises system temperatures, and causes very loud fan noise. Highly discouraged on battery.</p></div>
                             </div>
                         </div>
                         <div class="bg-red-50 border-t border-red-200 px-6 md:px-8 py-6 text-sm text-red-900">
