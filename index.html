@@ -109,10 +109,16 @@
     
     <!-- CPU Selection Flow -->
     <div id="cpuPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
-        <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            System Overview
-        </button>
+        <div class="flex gap-6 mb-10 border-b border-slate-200 pb-4">
+            <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Back
+            </button>
+            <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                System Overview
+            </button>
+        </div>
         
         <div id="cpuBrandSelection">
             <div class="mb-10 text-center">
@@ -168,10 +174,16 @@
 
     <!-- GPU Selection Flow -->
     <div id="gpuPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
-        <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            System Overview
-        </button>
+        <div class="flex gap-6 mb-10 border-b border-slate-200 pb-4">
+            <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Back
+            </button>
+            <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                System Overview
+            </button>
+        </div>
         
         <div id="gpuBrandSelection">
             <div class="mb-10 text-center">
@@ -191,10 +203,16 @@
     
     <!-- Tweak List Page -->
     <div id="tweaksListPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
-        <button onclick="navigate('mainPage')" class="mb-10 text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            System Overview
-        </button>
+        <div class="flex gap-6 mb-10 border-b border-slate-200 pb-4">
+            <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Back
+            </button>
+            <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                System Overview
+            </button>
+        </div>
         
         <div class="mb-8 border-b border-slate-200 pb-8">
             <h1 class="text-4xl font-bold text-slate-900 mb-3">Recommended Tweaks</h1>
@@ -305,6 +323,17 @@
             </div>
 
             <!-- INTEL: Modern Hybrid -->
+            <div id="tweak-intel-modern-boost" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('intel-modern-boost')">
+                <div class="flex items-start gap-4">
+                    <div class="mt-0.5 flex-shrink-0">
+                        <div class="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    </div>
+                    <div><p class="text-slate-800 font-medium leading-relaxed">Processor Performance Boost Mode</p></div>
+                </div>
+            </div>
+
             <div id="tweak-intel-modern-hags" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('intel-modern-hags')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -507,11 +536,17 @@
 
     <!-- Final Guide Display Page -->
     <div id="tweaksPage" class="page-container hidden container mx-auto px-4 py-12 max-w-5xl">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-            <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Start Over
-            </button>
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
+            <div class="flex gap-6">
+                <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    Back
+                </button>
+                <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    System Overview
+                </button>
+            </div>
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 text-green-700 border border-green-200 text-sm font-semibold">
                 <span class="relative flex h-2 w-2">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -533,6 +568,7 @@
     
     <script>
         let currentCpuGroup = "AMD Ryzen";
+        let currentComponent = "";
 
         function navigate(pageId) {
             document.querySelectorAll('.page-container').forEach(page => {
@@ -549,6 +585,7 @@
 
             if (pageId === 'mainPage') {
                 resetSelections();
+                currentComponent = "";
             }
         }
 
@@ -596,6 +633,7 @@
         
         function showTweakList(groupName, component = 'cpu') {
             currentCpuGroup = groupName;
+            currentComponent = component;
             
             let architectureText = component === 'cpu' ? 'CPU Architecture' : (component === 'gpu' ? 'GPU Architecture' : (component === 'ram' ? 'Memory Capacity' : 'Storage Optimization'));
             const subtitle = document.getElementById('tweakListSubtitle');
@@ -643,6 +681,8 @@
                 if (groupName === 'Modern Hybrid Intel') {
                     const intelHags = document.getElementById('tweak-intel-modern-hags');
                     if (intelHags) intelHags.classList.remove('hidden');
+                    const intelBoost = document.getElementById('tweak-intel-modern-boost');
+                    if (intelBoost) intelBoost.classList.remove('hidden');
                 }
                 
                 const startupAppGroups = ['Early-Gen Ryzen', 'Mid-Gen Ryzen', 'Legacy Intel', 'Early Hybrid Intel'];
@@ -897,6 +937,34 @@
                             </div>
                         </div>
                         <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4"><p class="text-sm text-blue-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
+                    </div>
+                `;
+            } else if (tweakType === 'intel-modern-boost') {
+                headerText.innerText = `${currentCpuGroup}: Processor Performance Boost Mode`;
+                guideContainer.innerHTML = `
+                    <div class="glass-card overflow-hidden fade-in">
+                        <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                                <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (3).mp4" type="video/mp4"></video>
+                                <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                            </div>
+                            <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Laptop users who want a good balance between performance and temperature while running everyday workloads such as browsing, coding, media, or occasional heavy tasks.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It changes the CPU boost behavior so the processor increases its clock speed only when necessary instead of boosting aggressively all the time.</p></div>
+                                <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. Extremely heavy workloads may see slightly slower boost response compared to the fully aggressive mode.</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4 text-sm text-blue-800">
+                            <p class="mb-2"><strong class="font-bold">NOTE:</strong> Processor Boost Mode controls how aggressively the CPU increases its clock speed when a workload appears. Different modes prioritize either performance or power efficiency.</p>
+                            <ul class="list-disc pl-5 mb-2 space-y-1">
+                                <li><strong>Disabled:</strong> Prevents the CPU from boosting above its base clock speed. This reduces heat and power usage but also lowers performance.</li>
+                                <li><strong>Enabled:</strong> Allows the processor to boost normally when the operating system requests higher performance.</li>
+                                <li><strong>Aggressive:</strong> The CPU boosts to higher frequencies immediately when workload appears, providing the fastest performance but also increasing heat and power consumption.</li>
+                                <li><strong>Efficient Enabled:</strong> Allows boosting while attempting to maintain better energy efficiency compared to the standard enabled mode.</li>
+                                <li><strong>Efficient Aggressive:</strong> Boosts quickly when needed but still tries to control power usage and temperature, making it suitable for balanced laptop usage.</li>
+                            </ul>
+                            <p>Users can adjust the boost mode according to their needs depending on whether they prefer maximum performance, balanced efficiency, or lower temperatures and better battery life.</p>
+                        </div>
                     </div>
                 `;
             }
@@ -1333,6 +1401,49 @@
                         <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> Do not disable the apps which you actually need to run on startup.</p></div>
                     </div>
                 `;
+            }
+        }
+
+        function goBack() {
+            const cpuPage = document.getElementById('cpuPage');
+            const gpuPage = document.getElementById('gpuPage');
+            const tweaksListPage = document.getElementById('tweaksListPage');
+            const tweaksPage = document.getElementById('tweaksPage');
+
+            if (!tweaksPage.classList.contains('hidden')) {
+                // If on final guide -> Go back to tweak list
+                navigate('tweaksListPage');
+            } 
+            else if (!tweaksListPage.classList.contains('hidden')) {
+                // If on tweak list -> Go back to specific component page or main menu
+                if (currentComponent === 'cpu') {
+                    navigate('cpuPage');
+                } else if (currentComponent === 'gpu') {
+                    navigate('gpuPage');
+                    document.getElementById('gpuBrandSelection').classList.remove('hidden');
+                    document.getElementById('gpuBrandSelection').classList.add('fade-in');
+                } else {
+                    // RAM and Disk go straight back to main
+                    navigate('mainPage');
+                }
+            } 
+            else if (!cpuPage.classList.contains('hidden')) {
+                // If on CPU page -> Check if we are deep in intel/amd selection or at root
+                const amdSeries = document.getElementById('amdSeriesSelection');
+                const intelSeries = document.getElementById('intelSeriesSelection');
+                
+                if (!amdSeries.classList.contains('hidden') || !intelSeries.classList.contains('hidden')) {
+                    amdSeries.classList.add('hidden');
+                    intelSeries.classList.add('hidden');
+                    document.getElementById('cpuBrandSelection').classList.remove('hidden');
+                    document.getElementById('cpuBrandSelection').classList.add('fade-in');
+                } else {
+                    navigate('mainPage');
+                }
+            }
+            else if (!gpuPage.classList.contains('hidden')) {
+                // If on GPU page -> Go back to main menu
+                navigate('mainPage');
             }
         }
     </script>
