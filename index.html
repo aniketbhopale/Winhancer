@@ -636,6 +636,11 @@
                     if (nextHags) nextHags.classList.remove('hidden');
                 }
 
+                if (groupName === 'Legacy Intel') {
+                    const minState = document.getElementById('tweak-early-minstate');
+                    if (minState) minState.classList.remove('hidden');
+                }
+
                 if (groupName === 'Modern Hybrid Intel') {
                     const intelHags = document.getElementById('tweak-intel-modern-hags');
                     if (intelHags) intelHags.classList.remove('hidden');
