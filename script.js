@@ -1,0 +1,909 @@
+let currentCpuGroup = "AMD Ryzen";
+let currentComponent = "";
+
+function navigate(pageId) {
+    document.querySelectorAll('.page-container').forEach(page => {
+        page.classList.add('hidden');
+        page.classList.remove('fade-in');
+    });
+
+    const targetPage = document.getElementById(pageId);
+    if(targetPage) {
+        targetPage.classList.remove('hidden');
+        void targetPage.offsetWidth; 
+        targetPage.classList.add('fade-in');
+    }
+
+    if (pageId === 'mainPage') {
+        resetSelections();
+        currentComponent = "";
+    }
+}
+
+function resetSelections() {
+    const cpuBrand = document.getElementById('cpuBrandSelection');
+    if (cpuBrand) cpuBrand.classList.remove('hidden');
+    const amdSeries = document.getElementById('amdSeriesSelection');
+    if (amdSeries) amdSeries.classList.add('hidden');
+    const intelSeries = document.getElementById('intelSeriesSelection');
+    if (intelSeries) intelSeries.classList.add('hidden');
+
+    const gpuBrand = document.getElementById('gpuBrandSelection');
+    if (gpuBrand) gpuBrand.classList.remove('hidden');
+}
+
+function selectCpuBrand(brand) {
+    const brandSelection = document.getElementById('cpuBrandSelection');
+    if (brandSelection) brandSelection.classList.add('hidden');
+    
+    if (brand === 'amd') {
+        const target = document.getElementById('amdSeriesSelection');
+        if (target) {
+            target.classList.remove('hidden');
+            target.classList.add('fade-in');
+        }
+    } else if (brand === 'intel') {
+        const target = document.getElementById('intelSeriesSelection');
+        if (target) {
+            target.classList.remove('hidden');
+            target.classList.add('fade-in');
+        }
+    }
+}
+
+function selectGpuBrand(brand) {
+    const brandSelection = document.getElementById('gpuBrandSelection');
+    if (brandSelection) brandSelection.classList.add('hidden');
+
+    if (brand === 'nvidia') {
+        showTweakList('NVIDIA', 'gpu');
+    } else if (brand === 'amd') {
+        showTweakList('AMD Radeon', 'gpu');
+    }
+}
+
+function showTweakList(groupName, component = 'cpu') {
+    currentCpuGroup = groupName;
+    currentComponent = component;
+    
+    let architectureText = component === 'cpu' ? 'CPU Architecture' : (component === 'gpu' ? 'GPU Architecture' : (component === 'ram' ? 'Memory Capacity' : 'Storage Optimization'));
+    const subtitle = document.getElementById('tweakListSubtitle');
+    if (subtitle) subtitle.innerText = `${architectureText}: ${groupName}. Select a specific optimization to view its detailed guide.`;
+    
+    document.querySelectorAll('.tweak-card').forEach(card => {
+        card.classList.add('hidden');
+    });
+    
+    if (component === 'cpu') {
+        const visualTweak = document.getElementById('tweak-univ-visual');
+        if(visualTweak) visualTweak.classList.remove('hidden');
+        const foregroundTweak = document.getElementById('tweak-univ-foreground');
+        if(foregroundTweak) foregroundTweak.classList.remove('hidden');
+
+        if (groupName === 'Early-Gen Ryzen') {
+            const t1 = document.getElementById('tweak-early-balanced');
+            if(t1) t1.classList.remove('hidden');
+            const t2 = document.getElementById('tweak-early-minstate');
+            if(t2) t2.classList.remove('hidden');
+        }
+        
+        if (groupName === 'Mid-Gen Ryzen' || groupName === 'Early Hybrid Intel') {
+            const midBalanced = document.getElementById('tweak-mid-balanced');
+            if (midBalanced) midBalanced.classList.remove('hidden');
+        }
+
+        if (groupName === 'Mid-Gen Ryzen') {
+            const midCoreParking = document.getElementById('tweak-mid-coreparking');
+            if (midCoreParking) midCoreParking.classList.remove('hidden');
+        }
+        
+        if (groupName === 'Next-Gen Ryzen') {
+            const nextBoost = document.getElementById('tweak-next-boost');
+            if (nextBoost) nextBoost.classList.remove('hidden');
+            const nextHags = document.getElementById('tweak-next-hags');
+            if (nextHags) nextHags.classList.remove('hidden');
+        }
+
+        if (groupName === 'Legacy Intel') {
+            const minState = document.getElementById('tweak-early-minstate');
+            if (minState) minState.classList.remove('hidden');
+        }
+
+        if (groupName === 'Modern Hybrid Intel') {
+            const intelHags = document.getElementById('tweak-intel-modern-hags');
+            if (intelHags) intelHags.classList.remove('hidden');
+            const intelBoost = document.getElementById('tweak-intel-modern-boost');
+            if (intelBoost) intelBoost.classList.remove('hidden');
+        }
+        
+        const startupAppGroups = ['Early-Gen Ryzen', 'Mid-Gen Ryzen', 'Legacy Intel', 'Early Hybrid Intel'];
+        if (startupAppGroups.includes(groupName)) {
+            const startupTweak = document.getElementById('tweak-startup-apps');
+            if(startupTweak) startupTweak.classList.remove('hidden');
+        }
+    } 
+    else if (component === 'gpu') {
+        if (groupName === 'NVIDIA') {
+            const g1 = document.getElementById('tweak-gpu-battery');
+            if(g1) g1.classList.remove('hidden');
+            const g2 = document.getElementById('tweak-gpu-balanced');
+            if(g2) g2.classList.remove('hidden');
+            const g3 = document.getElementById('tweak-gpu-performance');
+            if(g3) g3.classList.remove('hidden');
+        } else if (groupName === 'AMD Radeon') {
+            const a1 = document.getElementById('tweak-amd-battery');
+            if(a1) a1.classList.remove('hidden');
+            const a2 = document.getElementById('tweak-amd-balanced');
+            if(a2) a2.classList.remove('hidden');
+            const a3 = document.getElementById('tweak-amd-performance');
+            if(a3) a3.classList.remove('hidden');
+        }
+    } else if (component === 'ram') {
+        const r1 = document.getElementById('tweak-ram-startup');
+        if(r1) r1.classList.remove('hidden');
+        const r2 = document.getElementById('tweak-ram-services');
+        if(r2) r2.classList.remove('hidden');
+        const r3 = document.getElementById('tweak-ram-browser');
+        if(r3) r3.classList.remove('hidden');
+        const r4 = document.getElementById('tweak-ram-visuals');
+        if(r4) r4.classList.remove('hidden');
+    } else if (component === 'disk') {
+        const d1 = document.getElementById('tweak-disk-storagesense');
+        if(d1) d1.classList.remove('hidden');
+        const d2 = document.getElementById('tweak-disk-startup');
+        if(d2) d2.classList.remove('hidden');
+        const d3 = document.getElementById('tweak-disk-chkdsk');
+        if(d3) d3.classList.remove('hidden');
+    }
+
+    navigate('tweaksListPage');
+}
+
+function showGuide(tweakType) {
+    navigate('tweaksPage');
+    const guideContainer = document.getElementById('guideContent');
+    const headerText = document.getElementById('guideSubtitle');
+    
+    if (!guideContainer || !headerText) {
+        console.error("Missing DOM elements for the guide.");
+        return;
+    }
+    
+    // ================== CPU GUIDES ==================
+    if (tweakType === 'visual') {
+        headerText.innerText = `${currentCpuGroup}: Adjust Windows Visual Effects`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/CPU Ryzen 5 (1).mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users running heavy applications on systems with limited Hardware/ Memory (4GB, or 8GB ), or those who value raw operating system speed over modern aesthetics.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It disables all Windows UI animations, drop shadows, translucent menus, and smooth scrolling to free up CPU cycles and system memory.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will make Windows look significantly older and less polished.</p></div>
+                    </div>
+                </div>
+                <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> This is a 100% safe OS-level tweak that can be easily reversed at any time.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'foreground') {
+        headerText.innerText = `${currentCpuGroup}: Processor Scheduling Prioritization`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Cpu Ryzen 5 (2).mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It entirely depends on your workload! If you want FOREGROUND processes to run fastest, select "Programs". If you want BACKGROUND processes to be prioritized, let it remain as "Background services".</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It alters the Windows CPU scheduler to give uninterrupted calculation timeslices to your current window or shares power equally.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It is 100% safe. Background file downloads might take slightly longer if "Programs" is selected.</p></div>
+                    </div>
+                </div>
+                <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> Because this is an OS-level tweak, it works identically across all generations without affecting warranty.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'startup') {
+        headerText.innerText = `${currentCpuGroup}: Disable Unnecessary Startup Apps`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Cpu Ryzen uni 3 (6).mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users experiencing high background RAM usage, or a sluggish system right after turning on their PC.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents unnecessary applications from automatically launching in the background when Windows starts, freeing up memory and CPU cycles for your actual tasks.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Disabling unnecessary startup apps won't harm system in any way.</p></div>
+                    </div>
+                </div>
+                <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> You can always re-enable an app later in the Task Manager if you find you need it to start automatically.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'early-balanced') {
+        headerText.innerText = `${currentCpuGroup}: Apply AMD Ryzen Balanced Plan`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 2 (3).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Early AM4 motherboard users experiencing unusually high idle temperatures and loud fan noise.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It instructs the older Zen core complexes exactly when to sleep properly, correcting a known gap in the default Windows scheduler.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: None. This is the officially intended and safe operating state.</p></div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4"><p class="text-sm text-emerald-800"><strong class="font-bold">NOTE:</strong> Enabling High Performance might give better performance but can cause rapid increase in temp.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'early-minstate') {
+        headerText.innerText = `${currentCpuGroup}: Set Minimum Processor State to 5%`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 2 (4).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users noticing rapid battery drain or high CPU temperatures during low-intensity tasks.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It prevents Windows from artificially locking the CPU clock speed at 100%. It allows the hardware to "relax".</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: 100% safe. The CPU will still instantly ramp up to maximum speed the moment you start a heavy workload.</p></div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-4"><p class="text-sm text-emerald-800"><strong class="font-bold">NOTE:</strong> Desktop users will only see a "Plugged in" option. Set it to 5%.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'mid-coreparking') {
+        headerText.innerText = `${currentCpuGroup}: Optimize Core Parking via QuickCPU`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 2 (5).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who do heavy work and experience "micro-stutters" or tiny freezes and prioritize raw responsiveness over power saving.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It forces Windows to keep all CPU cores awake and ready to execute instructions, completely eliminating the excess delay caused by waking up sleeping cores.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will increase your baseline idle temperatures and power consumption. Because the cores never fully go to sleep, they constantly draw power. It's a deliberate trading of high heat with good responsiveness and performance.</p></div>
+                    </div>
+                </div>
+                <div class="bg-sky-50 border-t border-sky-200 px-6 md:px-8 py-4">
+                    <p class="text-sm text-sky-800">
+                        <strong class="font-bold">NOTE:</strong> Parking index can be adjusted based on the cooling system of your device.
+                    </p>
+                </div>
+            </div>
+        `;
+    } else if (tweakType === 'mid-balanced') {
+        headerText.innerText = `${currentCpuGroup}: Apply power plan for Balanced Workload`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Balanced Plan.mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who perform mixed workloads should use this mode. It is ideal for people who sometimes run heavy applications and sometimes perform light tasks like browsing or office work.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Balanced Power Plan automatically adjusts CPU performance based on system workload. It increases processor speed during demanding tasks and reduces power usage when the system is idle or performing light work.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. However, in some cases maximum performance may not be maintained continuously like in High Performance mode.</p></div>
+                    </div>
+                </div>
+                <div class="bg-indigo-50 border-t border-indigo-200 px-6 md:px-8 py-4"><p class="text-sm text-indigo-800"><strong class="font-bold">NOTE:</strong> Balanced mode works especially well with modern CPUs that use both performance and efficiency cores, helping the system balance speed and power usage.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'next-boost') {
+        headerText.innerText = `${currentCpuGroup}: Processor Performance Boost Mode`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (3).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Laptop users who want a good balance between performance and temperature while running everyday workloads such as browsing, coding, media, or occasional heavy tasks.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It changes the CPU boost behavior so the processor increases its clock speed only when necessary instead of boosting aggressively all the time.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. Extremely heavy workloads may see slightly slower boost response compared to the fully aggressive mode.</p></div>
+                    </div>
+                </div>
+                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4 text-sm text-orange-800">
+                    <p class="mb-2"><strong class="font-bold">NOTE:</strong> Processor Boost Mode controls how aggressively the CPU increases its clock speed when a workload appears. Different modes prioritize either performance or power efficiency.</p>
+                    <ul class="list-disc pl-5 mb-2 space-y-1">
+                        <li><strong>Disabled:</strong> Prevents the CPU from boosting above its base clock speed. This reduces heat and power usage but also lowers performance.</li>
+                        <li><strong>Enabled:</strong> Allows the processor to boost normally when the operating system requests higher performance.</li>
+                        <li><strong>Aggressive:</strong> The CPU boosts to higher frequencies immediately when workload appears, providing the fastest performance but also increasing heat and power consumption.</li>
+                        <li><strong>Efficient Enabled:</strong> Allows boosting while attempting to maintain better energy efficiency compared to the standard enabled mode.</li>
+                        <li><strong>Efficient Aggressive:</strong> Boosts quickly when needed but still tries to control power usage and temperature, making it suitable for balanced laptop usage.</li>
+                    </ul>
+                    <p>Users can adjust the boost mode according to their needs depending on whether they prefer maximum performance, balanced efficiency, or lower temperatures and better battery life.</p>
+                </div>
+            </div>
+        `;
+    } else if (tweakType === 'next-hags') {
+        headerText.innerText = `${currentCpuGroup}: Hardware Accelerated GPU Scheduling (HAGS)`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (4).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this optimization?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who run applications that frequently utilize GPU processing along with the CPU may benefit from this optimization, as it helps reduce CPU involvement in graphics workload scheduling.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Hardware Accelerated GPU Scheduling shifts part of the graphics task scheduling process from the CPU to the GPU. By allowing the GPU to manage its own task queue, the CPU performs fewer scheduling operations related to graphics workloads, which can reduce CPU overhead.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact in most situations. In some workloads the difference may be minimal because the optimization mainly affects how graphics tasks are scheduled rather than the computational capability of the CPU.</p></div>
+                    </div>
+                </div>
+                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'intel-modern-hags') {
+        headerText.innerText = `${currentCpuGroup}: Hardware Accelerated GPU Scheduling (HAGS)`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (4).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this optimization?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who run applications that frequently utilize GPU processing along with the CPU may benefit from this optimization, as it helps reduce CPU involvement in graphics workload scheduling.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Hardware Accelerated GPU Scheduling shifts part of the graphics task scheduling process from the CPU to the GPU. By allowing the GPU to manage its own task queue, the CPU performs fewer scheduling operations related to graphics workloads, which can reduce CPU overhead.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact in most situations. In some workloads the difference may be minimal because the optimization mainly affects how graphics tasks are scheduled rather than the computational capability of the CPU.</p></div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4"><p class="text-sm text-blue-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'intel-modern-boost') {
+        headerText.innerText = `${currentCpuGroup}: Processor Performance Boost Mode`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (3).mp4" type="video/mp4"></video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Laptop users who want a good balance between performance and temperature while running everyday workloads such as browsing, coding, media, or occasional heavy tasks.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It changes the CPU boost behavior so the processor increases its clock speed only when necessary instead of boosting aggressively all the time.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. Extremely heavy workloads may see slightly slower boost response compared to the fully aggressive mode.</p></div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4 text-sm text-blue-800">
+                    <p class="mb-2"><strong class="font-bold">NOTE:</strong> Processor Boost Mode controls how aggressively the CPU increases its clock speed when a workload appears. Different modes prioritize either performance or power efficiency.</p>
+                    <ul class="list-disc pl-5 mb-2 space-y-1">
+                        <li><strong>Disabled:</strong> Prevents the CPU from boosting above its base clock speed. This reduces heat and power usage but also lowers performance.</li>
+                        <li><strong>Enabled:</strong> Allows the processor to boost normally when the operating system requests higher performance.</li>
+                        <li><strong>Aggressive:</strong> The CPU boosts to higher frequencies immediately when workload appears, providing the fastest performance but also increasing heat and power consumption.</li>
+                        <li><strong>Efficient Enabled:</strong> Allows boosting while attempting to maintain better energy efficiency compared to the standard enabled mode.</li>
+                        <li><strong>Efficient Aggressive:</strong> Boosts quickly when needed but still tries to control power usage and temperature, making it suitable for balanced laptop usage.</li>
+                    </ul>
+                    <p>Users can adjust the boost mode according to their needs depending on whether they prefer maximum performance, balanced efficiency, or lower temperatures and better battery life.</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // ================== GPU GUIDES (NVIDIA) ==================
+    else if (tweakType === 'gpu-battery') {
+        headerText.innerText = `${currentCpuGroup}: Battery Saving Preset`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/nv low.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for laptop users running on battery power or users dealing with severe overheating issues who want to maximize their device's lifespan.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It aggressively limits frame rates, reduces texture filtering quality, and enables power-saving states to drastically lower GPU usage, power draw, and fan noise.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Yes, visual quality will be noticeably reduced, and frame rates will be capped at a lower threshold, which may feel less smooth.</p></div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-6 text-sm text-emerald-800">
+                    <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                    <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-emerald-200">
+                        <ul class="list-disc pl-5 space-y-3">
+                            <li><strong>Power Management Mode (Optimal power / Normal):</strong> Allows the GPU to aggressively downclock during lighter rendering workloads. This minimizes power consumption and thermal output when absolute maximum compute performance is not required.</li>
+                            <li><strong>Low Latency Mode (Off):</strong> Disables aggressive frame queuing from the CPU. This directly reduces unnecessary synchronization overhead, significantly lowering your overall system power draw and heat generation during standard operation.</li>
+                            <li><strong>Max Frame Rate (30–45 FPS):</strong> Strictly caps maximum rendered frames. This acts as a hard limit on GPU utilization, preventing runaway power consumption and drastically extending battery lifespan during intensive 3D tasks.</li>
+                            <li><strong>Background Application Max Frame Rate (20 FPS):</strong> Limits rendering speed for minimized applications. This highly effective measure ensures background 3D workloads do not needlessly drain system battery while you focus on primary foreground tasks.</li>
+                            <li><strong>Vertical Sync (On):</strong> Synchronizes frame delivery with your display's refresh rate. This eliminates screen tearing and prevents the GPU from wasting critical battery power rendering unseen, excess frames.</li>
+                            <li><strong>Shader Cache Size (Driver Default):</strong> Keeps compiled shaders on storage using carefully balanced default limits. This ensures stutter-free operation in 3D applications without triggering heavy, power-draining background processing routines.</li>
+                            <li><strong>CUDA – GPUs (All):</strong> Permits the system to utilize all available CUDA cores. This ensures parallel compute applications can process efficiently without forcing artificial bottlenecks that might prolong active task times.</li>
+                            <li><strong>OpenGL GDI Compatibility (Auto):</strong> Automatically manages OpenGL interactions with Windows. Keeping this on Auto ensures maximum compatibility and stability across various applications without adding unnecessary rendering overhead that consumes power.</li>
+                            <li><strong>Vulkan/OpenGL Present Method (Auto):</strong> Lets the graphics driver intelligently select the optimal frame presentation method. This guarantees stability in modern graphics APIs while safely managing power delivery and presentation cycles.</li>
+                            <li><strong>Anisotropic Filtering (App-controlled / Off):</strong> Manages distant texture clarity. Letting the application decide or keeping it explicitly off prevents the driver from forcing heavy rendering loads, directly conserving vital battery power.</li>
+                            <li><strong>NVIDIA Image Scaling (NIS) (On - light scaling):</strong> Offers a massive performance boost by rendering the application at a significantly lower internal resolution, saving immense battery power while simultaneously maintaining highly acceptable visual clarity.</li>
+                            <li><strong>Antialiasing - FXAA (Off):</strong> A post-processing anti-aliasing method. Deliberately disabling this feature saves valuable compute resources and prevents blurring, leaving edge-smoothing entirely to more efficient, native application-level engines.</li>
+                            <li><strong>Antialiasing - Transparency (Off):</strong> Smooths complex transparent texture edges. Disabling this demanding feature saves a significant amount of GPU memory bandwidth and processing power, as it is notoriously resource-heavy.</li>
+                            <li><strong>Multi-Frame Sampled AA (MFAA) (Off):</strong> An advanced anti-aliasing technique. Keeping this disabled maintains strict baseline power efficiency and prevents unexpected performance dips or sudden power spikes in older or unsupported software.</li>
+                            <li><strong>Texture Filtering – Quality (High Performance):</strong> Alters complex texture filtering algorithms. Forcing this profile strictly prioritizes raw rendering speed over minor visual details, significantly lowering the GPU compute workload to maximize battery conservation.</li>
+                            <li><strong>Texture Filtering – Negative LOD Bias (Clamp):</strong> Prevents high-resolution textures from severely aliasing when overall filtering quality is lowered. Clamping this ensures textures remain visually stable and do not shimmer distractingly during rapid movement.</li>
+                            <li><strong>Texture Filtering – Trilinear Optimization (Off):</strong> A bilinear filtering shortcut designed to increase performance. Turning this off prevents the introduction of distracting visual artifacts when you are already forcing high-performance, battery-saving texture profiles.</li>
+                            <li><strong>Texture Filtering – Anisotropic Sample Optimization (Off):</strong> Dynamically limits anisotropic samples based on pixel size. Keeping this feature disabled completely avoids introducing severe texture shimmering issues, ensuring basic image quality does not degrade excessively.</li>
+                            <li><strong>Triple Buffering (Off):</strong> Adds a third frame buffer for OpenGL applications. Keeping this disabled saves crucial Video RAM bandwidth and reduces the overall power consumption associated with heavy traditional V-Sync buffering.</li>
+                            <li><strong>Threaded Optimization (Auto):</strong> Enables advanced multithreaded optimizations. Leaving this setting on Auto allows the driver to intelligently decide when to use multiple CPU cores, avoiding unnecessary system-wide battery power spikes.</li>
+                            <li><strong>PhysX (Auto):</strong> Manages complex physics calculations. Setting this to Auto ensures the system intelligently delegates these demanding tasks to either the CPU or GPU, optimizing overall hardware efficiency perfectly.</li>
+                            <li><strong>WhisperMode (On, 30–45 FPS):</strong> An intelligent algorithm that precisely paces frame delivery on laptops. Enabling WhisperMode drastically reduces annoying cooling fan noise and keeps battery consumption and hardware temperatures at an absolute minimum.</li>
+                            <li><strong>BatteryBoost (On):</strong> Specifically optimizes the GPU's power states when unplugged. This strictly extends overall battery life by dynamically scaling down maximum performance thresholds and tightly controlling power limits automatically.</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-emerald-200">
+                            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (tweakType === 'gpu-balanced') {
+        headerText.innerText = `${currentCpuGroup}: Balanced Workload Preset`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/nv bal.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Perfect for the average user who wants a smooth, high-quality visual experience without pushing their GPU to its absolute thermal limits.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It finds the sweet spot by capping frames at a comfortable level, adjusting texture filtering for speed, and balancing power states to maintain stability and efficiency.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It strictly prevents the GPU from reaching its maximum possible frame rates, which may not be ideal for users requiring the absolute lowest input latency for highly responsive tasks.</p></div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-6 text-sm text-emerald-800">
+                    <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                    <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-emerald-200">
+                        <ul class="list-disc pl-5 space-y-3">
+                            <li><strong>Power Management Mode (Optimal Power):</strong> Dynamically adjusts GPU clock speeds based on the current workload. This intelligently balances high-end performance during intensive tasks with strict power efficiency during lighter tasks to prevent unnecessary heat.</li>
+                            <li><strong>Low Latency Mode (On):</strong> Strictly limits the queued frames prepared in advance by the CPU. Turning this feature on significantly reduces rendering input lag for a snappier feel without maxing out CPU utilization.</li>
+                            <li><strong>Max Frame Rate (60 FPS / Refresh Rate):</strong> Precisely caps maximum rendered frames to match your monitor. This ensures a perfectly smooth visual experience while actively preventing the graphics card from overworking and generating excess thermal heat.</li>
+                            <li><strong>Background App Max Frame Rate (20 FPS):</strong> Heavily restricts frame rendering speeds for minimized applications. This stops hidden 3D tasks from consuming valuable hardware resources, keeping your system highly efficient and perfectly responsive while multitasking.</li>
+                            <li><strong>Vertical Sync (Fast / Off):</strong> Fast Sync renders frames unconstrained while displaying the absolute latest completed frame. This completely eliminates jarring screen tearing without introducing the heavy input delay associated with traditional V-Sync methods.</li>
+                            <li><strong>Shader Cache Size (Unlimited):</strong> Continuously stores compiled shader files permanently on your fast storage drive. This effectively eliminates stuttering caused by on-the-fly shader compilation in modern 3D software, ensuring consistently smooth operation.</li>
+                            <li><strong>CUDA – GPUs (All):</strong> Fully enables all available physical CUDA cores for demanding compute workloads. This guarantees applications relying heavily on GPU acceleration have completely unrestricted access to your hardware's parallel processing power.</li>
+                            <li><strong>OpenGL GDI Compatibility (Auto):</strong> Automatically manages how OpenGL rendering interacts with the Windows interface. Keeping this on Auto ensures seamless software compatibility and actively prevents strange visual glitches in various rendering applications.</li>
+                            <li><strong>Vulkan/OpenGL Present Method (Auto):</strong> Allows the graphics driver to select the best frame presentation technique. This maximizes overall software compatibility and guarantees performance stability across all modern graphics APIs without requiring manual adjustments.</li>
+                            <li><strong>Anisotropic Filtering (App-controlled / 8x):</strong> Enhances the clarity of distant textures viewed at oblique angles. Leaving it application-controlled or forcing it to 8x balances excellent visual sharpness with a very easily manageable performance overhead.</li>
+                            <li><strong>NVIDIA Image Scaling (NIS) (Optional):</strong> Intelligently upscales heavy 3D applications from a significantly lower internal resolution. This provides a substantial frame rate boost while maintaining highly acceptable visual quality using advanced sharpening algorithms.</li>
+                            <li><strong>Antialiasing - FXAA (Off):</strong> A fast, post-process screen smoothing technique. Deliberately disabling FXAA prevents the rendered image from looking overly blurry, leaving edge-smoothing to the far superior native anti-aliasing methods within the software.</li>
+                            <li><strong>Antialiasing - Transparency (Off):</strong> Specifically smooths jagged edges on complex transparent textures like foliage. Turning this off saves a highly significant amount of GPU memory bandwidth, maintaining perfectly balanced and stable frame rates.</li>
+                            <li><strong>Multi-Frame Sampled AA (MFAA) (On):</strong> Nvidia's proprietary anti-aliasing technology. Enabling this highly efficient feature provides excellent edge smoothing visually comparable to heavy MSAA techniques, but operates at a significantly lower computational performance cost.</li>
+                            <li><strong>Texture Filtering – Quality (Quality):</strong> Perfectly balances the complex texture rendering algorithms. Selecting the standard Quality profile ensures rendered in-game textures look crisp, sharp, and detailed without unnecessarily over-taxing the GPU's processing capabilities.</li>
+                            <li><strong>Texture Filtering – Negative LOD Bias (Clamp):</strong> Actively prevents high-resolution textures from crawling or shimmering when dynamic filtering settings adjust. Clamping this value ensures a highly stable, exceptionally clean visual image during fast viewport movements.</li>
+                            <li><strong>Texture Filtering – Trilinear Optimization (On):</strong> Enables a highly efficient bilinear filtering shortcut on specific textures. Turning this intelligent optimization on provides a completely free performance boost with almost zero noticeable loss in visual quality.</li>
+                            <li><strong>Texture Filtering – Anisotropic Sample Optimization (On):</strong> Intelligently reduces the total number of anisotropic samples used based precisely on pixel size. This advanced technique seamlessly increases overall rendering performance while simultaneously maintaining excellent overall texture sharpness.</li>
+                            <li><strong>Triple Buffering (Off):</strong> Automatically adds a third frame buffer specifically for OpenGL applications. Keeping this setting disabled completely minimizes Video RAM consumption and actively reduces rendering input delay since V-Sync is disabled.</li>
+                            <li><strong>Threaded Optimization (Auto):</strong> Allows the Nvidia graphics driver to intelligently offload heavy rendering tasks across multiple CPU cores. Leaving it on Auto safely optimizes performance for older OpenGL applications without risking system instability.</li>
+                            <li><strong>PhysX (Auto):</strong> Manages complex, real-time physics calculations. Setting this to Auto ensures the system intelligently delegates these demanding tasks to either the GPU or CPU to maintain perfectly balanced overall hardware performance.</li>
+                            <li><strong>WhisperMode (45–60 FPS):</strong> An intelligent algorithm that smoothly paces frame delivery on modern gaming laptops. This feature provides a highly consistent visual experience while significantly reducing loud cooling fan noise and hardware temperatures.</li>
+                            <li><strong>BatteryBoost (Off):</strong> Completely disables aggressive battery-saving limits that trigger when a laptop is unplugged. Turning this off ensures you maintain perfectly smooth, consistent frame rates and optimal processing performance under heavy loads.</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-emerald-200">
+                            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (tweakType === 'gpu-performance') {
+        headerText.innerText = `${currentCpuGroup}: High Performance Preset`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/nv high.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for power users, 3D artists, and professionals with excellent system cooling who want to push their hardware to its absolute maximum computational limit.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It removes most of the power constraints, overclocks the memory, and forces the highest possible texture filtering quality for unconstrained rendering speeds.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Yes, it will drastically increase power consumption, significantly raise system temperatures, and result in very loud cooling fan noise. Highly discouraged on battery power.</p></div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50 border-t border-emerald-200 px-6 md:px-8 py-6 text-sm text-emerald-800">
+                    <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                    <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-emerald-200">
+                        <ul class="list-disc pl-5 space-y-3">
+                            <li><strong>Power Management Mode (Prefer Maximum Performance):</strong> Forces the GPU to maintain its absolute peak clock speeds during all 3D operations. This ensures zero power-state transitions occur, maximizing raw rendering speeds at the cost of higher temperatures.</li>
+                            <li><strong>Low Latency Mode (Ultra):</strong> Minimizes the internal queue of prepared frames generated by the CPU to the absolute minimum. This results in the lowest physical input lag possible, guaranteeing highly responsive application interactions.</li>
+                            <li><strong>Max Frame Rate (Off / Unlimited):</strong> Completely removes all artificial rendering caps. The graphics card is allowed to relentlessly process as many frames as physically possible, ensuring entirely unconstrained computational performance during extremely heavy workloads.</li>
+                            <li><strong>Background App Max Frame Rate (20 FPS):</strong> Severely limits frame rendering speeds for any minimized applications. This strict limitation ensures hidden 3D tasks absolutely cannot steal critical processing power away from your highly demanding foreground workloads.</li>
+                            <li><strong>Vertical Sync (Off):</strong> Completely disables all frame synchronization with the monitor's hardware refresh rate. This ensures the absolute minimum input delay possible and allows for maximum raw, uninhibited frame output from the GPU.</li>
+                            <li><strong>Shader Cache Size (Unlimited):</strong> Continuously stores all compiled shader files permanently on your fast storage drive. This absolutely guarantees completely stutter-free performance by entirely preventing massive performance hits associated with real-time shader compilation.</li>
+                            <li><strong>CUDA – GPUs (All):</strong> Enables entirely unrestricted access to all available physical CUDA compute cores. This is mandatory for professional rendering software to fully leverage massive parallel processing power without any artificial driver-level bottlenecks.</li>
+                            <li><strong>OpenGL GDI Compatibility (Prefer Performance):</strong> Explicitly optimizes how OpenGL rendering operations interact with the Windows interface. Forcing this ensures significantly faster rendering execution times, completely ignoring power efficiency in favor of raw, unadulterated computational speed.</li>
+                            <li><strong>Vulkan/OpenGL Present Method (Auto):</strong> Allows the core graphics driver to automatically select the most optimal presentation technique. This critically maintains extremely high performance output and guarantees maximum software stability across all modern rendering APIs.</li>
+                            <li><strong>Anisotropic Filtering (16x / App-controlled):</strong> Explicitly forces the absolute highest level of texture clarity when viewing surfaces at oblique angles. This massive boost to image quality incurs only a minimal performance penalty on modern hardware.</li>
+                            <li><strong>NVIDIA Image Scaling (NIS) (Off):</strong> Completely disables all software-based image upscaling algorithms. This strictly guarantees the absolute highest native image fidelity, ensuring complex 3D visuals remain perfectly sharp and entirely uncompressed during critical visual tasks.</li>
+                            <li><strong>Antialiasing - FXAA (On - Optional):</strong> Adds an exceptionally fast layer of post-process edge smoothing. Turning this on provides a much cleaner, less jagged overall image with an incredibly low computational cost for intensive rendering tasks.</li>
+                            <li><strong>Antialiasing - Transparency (Optional):</strong> Actively smooths heavily jagged edges on complex transparent textures like detailed foliage. Enabling this vastly increases overall visual realism, but demands highly significant processing memory bandwidth from the graphics card.</li>
+                            <li><strong>Multi-Frame Sampled AA (MFAA) (On):</strong> Enables Nvidia's advanced multi-frame anti-aliasing technology. This highly efficient feature provides excellent edge smoothing visually comparable to heavy MSAA techniques, but operates at a mere fraction of the expected performance cost.</li>
+                            <li><strong>Texture Filtering – Quality (High Quality / Quality):</strong> Commands the graphics driver to utilize its most demanding texture rendering algorithms. This strictly prioritizes absolute visual perfection, pristine texture clarity, and flawless image generation over any minor processing speed gains.</li>
+                            <li><strong>Texture Filtering – Negative LOD Bias (Clamp):</strong> Firmly locks internal texture detail levels to entirely prevent textures from crawling and shimmering during rapid movement. Clamping guarantees a highly stable, rock-solid visual image even at extreme rendering resolutions.</li>
+                            <li><strong>Texture Filtering – Trilinear Optimization (Off / Optional):</strong> Completely disables all texture filtering algorithmic shortcuts. Keeping this strict setting turned off ensures absolutely perfect trilinear filtering quality across all surfaces, maintaining the highest possible visual standard and depth.</li>
+                            <li><strong>Texture Filtering – Anisotropic Sample Optimization (Off):</strong> Completely disables all anisotropic sampling reduction shortcuts. This strict setting guarantees that rendered textures retain their absolute maximum sharpness, flawless detail, and pristine clarity at all extended 3D viewing distances.</li>
+                            <li><strong>Triple Buffering (Off):</strong> Adds an entirely separate frame buffer explicitly for OpenGL-based applications. Keep this firmly Off when VSync is disabled to drastically minimize input lag and save crucial system memory resources.</li>
+                            <li><strong>Threaded Optimization (On):</strong> Strictly forces the graphics driver to aggressively divide heavy rendering processing tasks across multiple available CPU threads. This highly advanced setting drastically improves overall computational performance and prevents severe system bottlenecks.</li>
+                            <li><strong>PhysX (GPU):</strong> Explicitly forces all complex, real-time physics calculations to be processed strictly on the graphics card. This completely frees up the primary CPU to exclusively handle core application logic and background tasks.</li>
+                            <li><strong>HAGS (On - If Available):</strong> Hardware-Accelerated GPU Scheduling shifts deep memory management from the CPU directly to the GPU. Enabling this significantly reduces system-wide latency, removes heavy CPU overhead, and drastically improves overall rendering efficiency.</li>
+                            <li><strong>WhisperMode (Off):</strong> Completely disables all strict laptop acoustic and thermal controls. This drastically removes all artificial frame rate caps and fan speed limits, allowing hardware components to aggressively push for absolute maximum performance.</li>
+                            <li><strong>BatteryBoost (Off):</strong> Completely disables all unplugged, driver-level power limits on laptops. This ensures the GPU continues to operate at its peak performance state, aggressively prioritizing raw, unadulterated rendering speed over any battery preservation.</li>
+                            <li><strong>MSI Afterburner Clock (+50 Core, +200 Memory):</strong> Applies a safe, carefully tested moderate hardware overclock to the graphics processor. This safely extracts significant additional raw processing power without dangerously pushing extreme voltage limits or risking permanent hardware damage.</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-emerald-200">
+                            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ================== GPU GUIDES (AMD RADEON) ==================
+    else if (tweakType === 'amd-battery') {
+        headerText.innerText = `${currentCpuGroup}: Battery Saving Preset`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center relative">
+                        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4 rounded-r-lg">
+                            <p class="text-sm text-red-800 font-medium">⚠️ IMPORTANT: Please ensure you read the Q&A and Key Settings sections below carefully before applying these modifications in your AMD Software.</p>
+                        </div>
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/amd low.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for laptop users running on battery power or those experiencing severe thermal throttling who want maximum device lifespan.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Aggressively limits frame rates and reduces texture filtering quality via Radeon Chill and Boost to drastically lower GPU utilization and power draw.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Visual clarity and frame rates will be noticeably reduced. Stuttering may occur during rapid mouse movements due to aggressive power pacing.</p></div>
+                    </div>
+                </div>
+                <div class="bg-red-50 border-t border-red-200 px-6 md:px-8 py-6 text-sm text-red-900">
+                    <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                    <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-red-200">
+                        <ul class="list-disc pl-5 space-y-3">
+                            <li><strong>Radeon Super Resolution (Off):</strong> Completely disabling this driver-level spatial upscaling technology actively prevents unnecessary background compute overhead. This strict setting forces the graphics card to avoid complex calculations, heavily reducing continuous thermal load.</li>
+                            <li><strong>Radeon Anti-Lag (Off):</strong> Disabling this feature reduces aggressive CPU-to-GPU synchronization polling rates. While Anti-Lag reduces input delay, turning it off significantly lowers overall system power draw, actively ensuring your battery drains much slower.</li>
+                            <li><strong>Radeon Boost (On):</strong> Dynamically and intelligently lowers internal rendering resolution during fast camera movements. This technology offers massive power savings and significantly lowers GPU temperatures by vastly reducing the rendering workload precisely when moving.</li>
+                            <li><strong>Radeon Chill (On, 30-45 FPS):</strong> Acts as a strict, highly intelligent frame rate limiter. Locking the maximum frames completely prevents runaway power consumption, ensuring the graphics card only works as hard as absolutely necessary.</li>
+                            <li><strong>Wait for Vertical Refresh (Always On):</strong> Strictly synchronizes all rendered frames directly to your display monitor's physical refresh rate. This completely eliminates jagged screen tearing while simultaneously preventing the GPU from continuously rendering unseen, excess frames.</li>
+                            <li><strong>Anti-Aliasing (Off):</strong> Completely disables native edge-smoothing algorithms built into the graphics driver. Strictly removing this highly demanding computational process significantly reduces overall processing requirements, maximizing hardware power efficiency perfectly on battery.</li>
+                            <li><strong>Anti-Aliasing Method (Multisampling):</strong> If edge smoothing is absolutely forced on by specific software, forcing Multisampling ensures the lowest computational impact. It provides basic visual smoothing while actively preserving your limited battery power reserves.</li>
+                            <li><strong>Morphological Anti-Aliasing (Off):</strong> Completely disables all highly demanding post-process blurring and smoothing effects. Keeping this off saves massive amounts of rendering bandwidth, preventing the processor from wasting critical electrical current on minor visual refinements.</li>
+                            <li><strong>Anisotropic Filtering (Off / App-controlled):</strong> Strictly prevents the AMD driver from forcing highly demanding distant texture rendering algorithms. Leaving this application-controlled conserves significant amounts of processing energy by simplifying the overall rendered 3D environment.</li>
+                            <li><strong>Texture Filtering Quality (Performance):</strong> Drastically lowers the complexity of visual texture rendering algorithms. Forcing the Performance profile inherently prioritizes raw execution speed and minimal electrical power consumption over fine visual details and textures.</li>
+                            <li><strong>Surface Format Optimization (On):</strong> Intelligently allows the graphics driver to dynamically optimize texture formats on the fly. This highly efficient process significantly improves overall rendering execution speed and heavily saves on electrical power consumption.</li>
+                            <li><strong>Tessellation Mode (Override -> Low):</strong> Strictly overriding this setting to Low vastly reduces the rendering of complex 3D geometry. This significantly lowers the massive computational workload, successfully preserving huge amounts of battery life efficiently.</li>
+                            <li><strong>OpenGL Triple Buffering (Off):</strong> Deliberately disabling this setting prevents the creation of an extra frame buffer. Keeping it strictly off saves highly critical Video RAM bandwidth and noticeably reduces overall power consumption actively.</li>
+                            <li><strong>AMD Fluid Motion Frames 2.1 (Off):</strong> Completely disables advanced, hardware-level frame generation technology. Keeping this strictly turned off entirely avoids incredibly heavy, continuous background processing algorithms, guaranteeing the graphics processor does not burn through battery reserves.</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-red-200">
+                            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (tweakType === 'amd-balanced') {
+        headerText.innerText = `${currentCpuGroup}: Balanced Workload Preset`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center relative">
+                        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4 rounded-r-lg">
+                            <p class="text-sm text-red-800 font-medium">⚠️ IMPORTANT: Please ensure you read the Q&A and Key Settings sections below carefully before applying these modifications in your AMD Software.</p>
+                        </div>
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/amd mid.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Perfect for average users desiring a smooth, high-quality visual experience without pushing their Radeon GPU to absolute thermal limits.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Finds the optimal sweet spot by capping frames to monitor refresh rates and adjusting texture filtering for stability and efficiency.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It strictly prevents the hardware from reaching maximum possible frame rates, which may not suit users requiring the absolute lowest input latency for highly responsive rendering tasks.</p></div>
+                    </div>
+                </div>
+                <div class="bg-red-50 border-t border-red-200 px-6 md:px-8 py-6 text-sm text-red-900">
+                    <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                    <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-red-200">
+                        <ul class="list-disc pl-5 space-y-3">
+                            <li><strong>Radeon Super Resolution (Optional):</strong> Enable this highly advanced technology to intelligently upscale heavy 3D applications from a significantly lower internal rendering resolution. This provides a massive frame rate boost while keeping the GPU much cooler.</li>
+                            <li><strong>Radeon Anti-Lag (On):</strong> Actively reduces the internal queue of prepared frames being sent from the CPU. Turning this on significantly lowers overall input lag, providing a highly responsive feel without aggressively overworking the processor.</li>
+                            <li><strong>Radeon Boost (Optional):</strong> Dynamically adjusts the internal rendering resolution downward only during rapid camera movements. Enable this if you require extra visual smoothness during action sequences without sacrificing high-quality static image clarity significantly.</li>
+                            <li><strong>Radeon Chill (Optional):</strong> Can be optionally utilized to set a highly comfortable, dynamically shifting frame rate range. It actively prevents the GPU from overworking unnecessarily when static, while providing maximum speed during heavy action.</li>
+                            <li><strong>Wait for Vertical Refresh (Off / Enhanced Sync):</strong> Unlocks your frame rates or utilizes AMD's Enhanced Sync technology. This completely eliminates jarring screen tearing without introducing the heavy, sluggish input delay typically associated with traditional V-Sync rendering methods.</li>
+                            <li><strong>Frame Rate Target Control (60 FPS):</strong> Strictly caps the absolute maximum number of rendered frames to match your monitor. This ensures a perfectly smooth visual experience while actively preventing the graphics card from overworking and overheating unnecessarily.</li>
+                            <li><strong>Anti-Aliasing (App-controlled):</strong> Strictly allows individual software engines to entirely manage their own specific edge-smoothing algorithms. This maintains a highly reliable, incredibly stable performance baseline without introducing unexpected, heavy rendering stutters or sudden crashes.</li>
+                            <li><strong>Anti-Aliasing Method (Multisampling):</strong> Utilizing the Multisampling method provides the absolute perfect balance between excellent visual clarity and highly efficient rendering performance, successfully smoothing jagged edges without violently over-taxing the graphics processor continuously.</li>
+                            <li><strong>Morphological Anti-Aliasing (Off):</strong> Firmly keeps all demanding post-process screen smoothing effects completely disabled. This highly crucial setting maintains absolute image sharpness and pristine clarity without adding unnecessary rendering overhead or extra electrical strain.</li>
+                            <li><strong>Anisotropic Filtering (App-controlled / 8x):</strong> Substantially enhances visual clarity of distant textures. Leaving it explicitly app-controlled or forcing it to 8x delivers excellent, highly detailed visual depth while incurring only a very minimal, manageable performance cost.</li>
+                            <li><strong>Texture Filtering Quality (Standard):</strong> Balances highly complex texture rendering algorithms utilized by the graphics card. The Standard profile ensures rendered in-game textures look perfectly crisp and detailed without needlessly taxing the graphics processor excessively.</li>
+                            <li><strong>Surface Format Optimization (On):</strong> Intelligently allows for dynamic texture format adjustments directly within the driver. This advanced optimization provides a completely free performance boost, achieving increased rendering speed with almost zero noticeable visual loss.</li>
+                            <li><strong>Tessellation Mode (AMD Optimized):</strong> Allows the highly advanced graphics driver to intelligently manage all complex geometry rendering. Selecting AMD Optimized provides the absolute best possible mix of intricate 3D structural detail and incredibly fast processing.</li>
+                            <li><strong>OpenGL Triple Buffering (Off):</strong> Firmly keep this setting turned completely off to drastically minimize Video RAM usage. You should absolutely only enable this if you are actively experiencing severe visual stuttering while using traditional V-Sync.</li>
+                            <li><strong>AMD Fluid Motion Frames 2.1 (Optional):</strong> Advanced hardware frame generation technology. Optionally enable this incredible feature in highly demanding software applications to receive a massive, artificial smoothness boost without requiring the GPU to traditionally render every frame.</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-red-200">
+                            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (tweakType === 'amd-performance') {
+        headerText.innerText = `${currentCpuGroup}: High Performance Preset`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center relative">
+                        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4 rounded-r-lg">
+                            <p class="text-sm text-red-800 font-medium">⚠️ IMPORTANT: Please ensure you read the Q&A and Key Settings sections below carefully before applying these modifications in your AMD Software.</p>
+                        </div>
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/amd high.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for power users, 3D artists, and enthusiasts with excellent cooling who want absolute maximum rendering speeds and visual fidelity.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Disables all power-saving constraints, forces the highest texture quality, and safely overclocks the core and memory for unconstrained performance.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Drastically increases power consumption, significantly raises system temperatures, and causes very loud fan noise. Highly discouraged on battery.</p></div>
+                    </div>
+                </div>
+                <div class="bg-red-50 border-t border-red-200 px-6 md:px-8 py-6 text-sm text-red-900">
+                    <p class="mb-3"><strong class="font-bold text-base">Key Settings Explained (Scroll for more):</strong></p>
+                    <div class="max-h-96 overflow-y-auto pr-4 border-r-2 border-red-200">
+                        <ul class="list-disc pl-5 space-y-3">
+                            <li><strong>Radeon Super Resolution (Off):</strong> Completely disables all driver-level software upscaling algorithms. This strictly ensures that high-end applications render exactly at their true native resolution for absolute pristine visual fidelity, completely ignoring any power efficiency goals.</li>
+                            <li><strong>Radeon Anti-Lag (On):</strong> Severely minimizes the internal queue of prepared frames sent from the CPU. Turning this strictly on results in the absolute lowest possible physical input lag, providing highly responsive and snappy interactions.</li>
+                            <li><strong>Radeon Boost (Off):</strong> Completely disables all dynamic resolution scaling technology within the driver. This guarantees that your visual image quality remains perfectly stable, incredibly sharp, and entirely uncompromised, even during incredibly rapid viewport movements.</li>
+                            <li><strong>Radeon Chill (Off):</strong> Completely removes all dynamic, intelligent frame pacing limits from the graphics driver. This allows the GPU to aggressively draw absolute maximum electrical power, relentlessly prioritizing entirely unconstrained rendering speeds perfectly.</li>
+                            <li><strong>Wait for Vertical Refresh (Off):</strong> Completely and strictly disables all forms of frame synchronization with your monitor. This guarantees the absolute minimum input delay possible and allows for maximum raw, uninhibited frame output from the GPU.</li>
+                            <li><strong>Frame Rate Target Control (Off / Unlimited):</strong> Completely removes all artificial rendering caps. The graphics processing unit is allowed to relentlessly output frames as fast as physically possible, guaranteeing absolute maximum hardware utilization and unconstrained computational performance.</li>
+                            <li><strong>Anti-Aliasing (Enhance / High):</strong> Explicitly forces the graphics driver to utilize far superior, highly demanding edge-smoothing algorithms. This strictly prioritizes absolute visual perfection and incredibly clean geometry over any minor processing speed gains whatsoever.</li>
+                            <li><strong>Anti-Aliasing Method (Supersampling / High Quality):</strong> Explicitly utilizes the absolute most complex rendering method available for edge smoothing. Forcing Supersampling strictly guarantees completely flawless visual details and maximum texture sharpness, entirely sacrificing raw processing speed effectively.</li>
+                            <li><strong>Morphological Anti-Aliasing (Optional):</strong> Adds a highly advanced layer of post-process screen smoothing. Optionally enable this highly demanding feature for an extra, beautiful layer of visual refinement, provided your hardware can easily handle the massive overhead.</li>
+                            <li><strong>Anisotropic Filtering (16x):</strong> Explicitly forces the absolute highest possible level of texture clarity when viewing distant surfaces. Forcing 16x filtering provides incredibly crisp, flawless visuals across vast 3D distances without any severe degradation.</li>
+                            <li><strong>Texture Filtering Quality (High / Quality):</strong> Explicitly commands the advanced graphics driver to strictly utilize its most mathematically demanding texture rendering algorithms. This prioritizes absolute visual perfection, pristine texture clarity, and flawless image generation over any speed.</li>
+                            <li><strong>Surface Format Optimization (Off):</strong> Completely disables all dynamic, on-the-fly texture format changes. This strict setting absolutely guarantees that all loaded textures consistently retain their absolute maximum mathematical precision, pristine color accuracy, and flawless underlying detail.</li>
+                            <li><strong>Tessellation Mode (Override -> High):</strong> Strictly overriding this feature forces the absolute maximum possible geometry detail and structural depth. This significantly enhances 3D environmental realism, deliberately placing an incredibly massive computational workload directly onto the GPU.</li>
+                            <li><strong>OpenGL Triple Buffering (Off):</strong> Keep this highly specific setting completely turned off to drastically minimize overall system input delay. Enable this strictly only if required to use V-Sync in older OpenGL applications to prevent massive drops.</li>
+                            <li><strong>AMD Fluid Motion Frames 2.1 (On):</strong> Enables highly advanced hardware frame generation technology. Turning this incredibly powerful feature on significantly boosts perceived visual smoothness in highly demanding workloads by intelligently generating entirely new, flawlessly integrated graphical frames.</li>
+                            <li><strong>Hardware Accelerated GPU Scheduling (On):</strong> Completely shifts deep memory management and task scheduling directly to the GPU's dedicated processor. Enabling this significantly reduces system-wide latency, removes heavy CPU overhead, and drastically improves overall active rendering efficiency.</li>
+                            <li><strong>MSI Afterburner Clock (+50 Core, +200 Memory):</strong> Applies a safe, carefully tested moderate hardware overclock. By manually adding these exact frequencies, you safely extract highly significant additional raw processing power without dangerously pushing extreme voltage limits on the hardware.</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-red-200">
+                            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ================== RAM GUIDES ==================
+    else if (tweakType === 'ram-startup') {
+        headerText.innerText = `${currentCpuGroup}: Disable Unnecessary Startup Apps`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Cpu Ryzen uni 3 (6).mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for all users, particularly those with 8GB of RAM or less, experiencing extremely high memory utilization or general sluggishness when launching heavy applications.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It stops non-essential background applications from pre-loading into your active system memory (RAM) upon boot. This immediately frees up physical memory capacity, leaving far more hardware RAM explicitly available for your primary active workloads.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No negative impact is caused by disabling unnecessary or not needed applications on startup. Applications that you manually disable will simply need to be opened manually when required.</p></div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 border-t border-purple-200 px-6 md:px-8 py-4"><p class="text-sm text-purple-800"><strong class="font-bold">NOTE:</strong> Do not disable the apps which you actually need to run on startup.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'ram-services') {
+        headerText.innerText = `${currentCpuGroup}: Know and disable Unnecessary services`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Ram2.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for users who want to maximize their available physical memory and reduce background CPU usage by permanently stopping non-essential background tasks.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It safely disables built-in telemetry, tracking, and unused Windows services. This drastically reduces the number of active background processes, freeing up physical RAM and lowering overall system idle temperatures.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: There is no negative impact if executed properly. However, disabling services you actually use (like printer spoolers, Bluetooth, or Xbox networking) will stop those specific functions from working.</p></div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 border-t border-purple-200 px-6 md:px-8 py-4"><p class="text-sm text-purple-800"><strong class="font-bold">NOTE:</strong> Do not disable services you actually need to run on your system. You can safely disable <strong>DiagsTrack</strong>, <strong>diagnosticshub.standardcollector.service</strong>, <strong>dmwappushservice</strong>, and retaildemo as these are retail purpose or Microsoft bug reporting and tracking services that have no use or importance in the system and are highly considered to be disabled.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'ram-browser') {
+        headerText.innerText = `${currentCpuGroup}: Enable Browser Memory Saver`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Ram3.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for users who keep many browser tabs open simultaneously and experience system slowdowns or lack of available physical RAM for other applications.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It automatically frees up active memory from unused background tabs. This strictly ensures your active tabs and demanding system applications have the maximum possible physical RAM available.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Inactive tabs will be completely purged from active memory and must reload when you switch back to them, which might cause a slight delay depending on your connection.</p></div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 border-t border-purple-200 px-6 md:px-8 py-4"><p class="text-sm text-purple-800"><strong class="font-bold">NOTE:</strong> You can manually add specific websites to an exception list if you need them to stay active in the background continuously without reloading.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'ram-visuals') {
+        headerText.innerText = `${currentCpuGroup}: Adjust Windows Visual Effects for Memory`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/CPU Ryzen 5 (1).mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Crucial for users with strictly limited physical memory (like 4GB or 8GB of RAM) who are facing frequent stuttering or freezing in system.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It completely disables hardware-accelerated animations, translucent menus, and drop shadows. This directly prevents Windows from forcefully caching massive graphical UI elements in your active system memory (RAM).</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: It will make Windows look significantly older and less polished.</p></div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 border-t border-purple-200 px-6 md:px-8 py-4"><p class="text-sm text-purple-800"><strong class="font-bold">NOTE:</strong> This is a highly effective, completely safe OS-level change that instantly reclaims usable system RAM and can be effortlessly reversed at any time.</p></div>
+            </div>
+        `;
+    }
+
+    // ================== DISK GUIDES ==================
+    else if (tweakType === 'disk-storagesense') {
+        headerText.innerText = `${currentCpuGroup}: Enable Storage Sense`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Disk1.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for users with low-capacity SSDs or full hard drives who frequently run out of storage space and experience severe system slowdowns.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It automatically deletes temporary system files, clears the recycle bin, and removes unused downloaded files, keeping your storage drive clean and preventing fragmented write operations.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No negative impact. However, ensure you review the download folder deletion policy, as it might automatically delete old files you intended to keep.</p></div>
+                    </div>
+                </div>
+                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> You can easily configure the cleanup schedule (daily, weekly, or monthly) to perfectly match your personal workflow and storage capacity needs.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'disk-chkdsk') {
+        headerText.innerText = `${currentCpuGroup}: Scan and Fix Logical File System Errors`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/disk2.mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for users experiencing random file corruption, unexpected system crashes, or slow read/write speeds, which often indicate underlying file system errors on the storage drive.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It uses the built-in Windows Check Disk utility to scan the storage drive's file system integrity and automatically repairs any logical errors or bad sectors it encounters.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No negative impact. However, the scan can take several minutes to complete, and repairing the main OS drive (C:) will require a system restart.</p></div>
+                    </div>
+                </div>
+                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> The video uses the command <code>chkdsk C: /f</code> for the main drive. You can replace "C:" with "D:" or "E:" to scan other specific storage drives.</p></div>
+            </div>
+        `;
+    } else if (tweakType === 'disk-startup') {
+        headerText.innerText = `${currentCpuGroup}: Disable Unnecessary Startup Applications`;
+        guideContainer.innerHTML = `
+            <div class="glass-card overflow-hidden fade-in">
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover">
+                            <source src="videos/Cpu Ryzen uni 3 (6).mp4" type="video/mp4">
+                        </video>
+                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users experiencing 100% disk usage, slow boot times, or severe system unresponsiveness right after turning on the PC.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It stops background applications from heavily reading and writing data to your storage drive simultaneously during startup.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No negative impact is caused by disabling unnecessary startup applications. Applications that you manually disable will simply need to be opened manually when required.</p></div>
+                    </div>
+                </div>
+                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> Do not disable the apps which you actually need to run on startup.</p></div>
+            </div>
+        `;
+    }
+}
+
+function goBack() {
+    const cpuPage = document.getElementById('cpuPage');
+    const gpuPage = document.getElementById('gpuPage');
+    const tweaksListPage = document.getElementById('tweaksListPage');
+    const tweaksPage = document.getElementById('tweaksPage');
+
+    if (!tweaksPage.classList.contains('hidden')) {
+        // If on final guide -> Go back to tweak list
+        navigate('tweaksListPage');
+    } 
+    else if (!tweaksListPage.classList.contains('hidden')) {
+        // If on tweak list -> Go back to specific component page or main menu
+        if (currentComponent === 'cpu') {
+            navigate('cpuPage');
+        } else if (currentComponent === 'gpu') {
+            navigate('gpuPage');
+            document.getElementById('gpuBrandSelection').classList.remove('hidden');
+            document.getElementById('gpuBrandSelection').classList.add('fade-in');
+        } else {
+            // RAM and Disk go straight back to main
+            navigate('mainPage');
+        }
+    } 
+    else if (!cpuPage.classList.contains('hidden')) {
+        // If on CPU page -> Check if we are deep in intel/amd selection or at root
+        const amdSeries = document.getElementById('amdSeriesSelection');
+        const intelSeries = document.getElementById('intelSeriesSelection');
+        
+        if (!amdSeries.classList.contains('hidden') || !intelSeries.classList.contains('hidden')) {
+            amdSeries.classList.add('hidden');
+            intelSeries.classList.add('hidden');
+            document.getElementById('cpuBrandSelection').classList.remove('hidden');
+            document.getElementById('cpuBrandSelection').classList.add('fade-in');
+        } else {
+            navigate('mainPage');
+        }
+    }
+    else if (!gpuPage.classList.contains('hidden')) {
+        // If on GPU page -> Go back to main menu
+        navigate('mainPage');
+    }
+}
