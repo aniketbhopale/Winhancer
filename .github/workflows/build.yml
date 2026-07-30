@@ -1,0 +1,26 @@
+name: Build Pipeline
+on:
+  push:
+    branches:
+      - 'KAN-11-Interactive-Troubleshooting-Feed'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Display Build Message
+        run: echo "GitHub Actions Build Successful"
+```[cite: 1]
+
+5. Save the file (`Ctrl + S`).
+
+---
+
+### Next step: Commit and Push
+
+In your terminal, run these three commands one by one[cite: 1]:
+
+1. Stage the new file[cite: 1]:
+   ```bash
+   git add .
