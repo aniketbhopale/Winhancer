@@ -739,7 +739,7 @@ function showGuide(tweakType) {
                         <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No negative impact. However, the scan can take several minutes to complete, and repairing the main OS drive (C:) will require a system restart.</p></div>
                     </div>
                 </div>
-                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> The video uses the command <code>chkdsk C: /f</code> for the main drive. You can replace "C:" with "D:" or "E:" to scan other specific storage drives.</p></div>
+                <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> The video uses the command <code>chkdsk C: /f</code> for the main drive. You can replace "C:" with "D:" or "E:" to scan other specific storage drives depending upon your Drive label.</p></div>
             </div>
         `;
     } else if (tweakType === 'disk-startup') {
@@ -754,7 +754,7 @@ function showGuide(tweakType) {
                         <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
                     </div>
                     <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users experiencing 100% disk usage, slow boot times, or severe system unresponsiveness right after turning on the PC.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users experiencing 100% Disk usage, slow boot times, or severe system unresponsiveness or lag right after turning on the PC.</p></div>
                         <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It stops background applications from heavily reading and writing data to your storage drive simultaneously during startup.</p></div>
                         <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No negative impact is caused by disabling unnecessary startup applications. Applications that you manually disable will simply need to be opened manually when required.</p></div>
                     </div>
