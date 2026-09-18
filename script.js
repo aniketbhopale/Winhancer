@@ -1,4 +1,4 @@
-let currentCpuGroup = "AMD Ryzen";
+let currentCpuGroup = "CPU";
 let currentComponent = "";
 
 function navigate(pageId) {
@@ -21,34 +21,8 @@ function navigate(pageId) {
 }
 
 function resetSelections() {
-    const cpuBrand = document.getElementById('cpuBrandSelection');
-    if (cpuBrand) cpuBrand.classList.remove('hidden');
-    const amdSeries = document.getElementById('amdSeriesSelection');
-    if (amdSeries) amdSeries.classList.add('hidden');
-    const intelSeries = document.getElementById('intelSeriesSelection');
-    if (intelSeries) intelSeries.classList.add('hidden');
-
     const gpuBrand = document.getElementById('gpuBrandSelection');
     if (gpuBrand) gpuBrand.classList.remove('hidden');
-}
-
-function selectCpuBrand(brand) {
-    const brandSelection = document.getElementById('cpuBrandSelection');
-    if (brandSelection) brandSelection.classList.add('hidden');
-    
-    if (brand === 'amd') {
-        const target = document.getElementById('amdSeriesSelection');
-        if (target) {
-            target.classList.remove('hidden');
-            target.classList.add('fade-in');
-        }
-    } else if (brand === 'intel') {
-        const target = document.getElementById('intelSeriesSelection');
-        if (target) {
-            target.classList.remove('hidden');
-            target.classList.add('fade-in');
-        }
-    }
 }
 
 function selectGpuBrand(brand) {
@@ -75,52 +49,21 @@ function showTweakList(groupName, component = 'cpu') {
     });
     
     if (component === 'cpu') {
-        const visualTweak = document.getElementById('tweak-univ-visual');
-        if(visualTweak) visualTweak.classList.remove('hidden');
-        const foregroundTweak = document.getElementById('tweak-univ-foreground');
-        if(foregroundTweak) foregroundTweak.classList.remove('hidden');
-
-        if (groupName === 'Early-Gen Ryzen') {
-            const t1 = document.getElementById('tweak-early-balanced');
-            if(t1) t1.classList.remove('hidden');
-            const t2 = document.getElementById('tweak-early-minstate');
-            if(t2) t2.classList.remove('hidden');
-        }
-        
-        if (groupName === 'Mid-Gen Ryzen' || groupName === 'Early Hybrid Intel') {
-            const midBalanced = document.getElementById('tweak-mid-balanced');
-            if (midBalanced) midBalanced.classList.remove('hidden');
-        }
-
-        if (groupName === 'Mid-Gen Ryzen') {
-            const midCoreParking = document.getElementById('tweak-mid-coreparking');
-            if (midCoreParking) midCoreParking.classList.remove('hidden');
-        }
-        
-        if (groupName === 'Next-Gen Ryzen') {
-            const nextBoost = document.getElementById('tweak-next-boost');
-            if (nextBoost) nextBoost.classList.remove('hidden');
-            const nextHags = document.getElementById('tweak-next-hags');
-            if (nextHags) nextHags.classList.remove('hidden');
-        }
-
-        if (groupName === 'Legacy Intel') {
-            const minState = document.getElementById('tweak-early-minstate');
-            if (minState) minState.classList.remove('hidden');
-        }
-
-        if (groupName === 'Modern Hybrid Intel') {
-            const intelHags = document.getElementById('tweak-intel-modern-hags');
-            if (intelHags) intelHags.classList.remove('hidden');
-            const intelBoost = document.getElementById('tweak-intel-modern-boost');
-            if (intelBoost) intelBoost.classList.remove('hidden');
-        }
-        
-        const startupAppGroups = ['Early-Gen Ryzen', 'Mid-Gen Ryzen', 'Legacy Intel', 'Early Hybrid Intel'];
-        if (startupAppGroups.includes(groupName)) {
-            const startupTweak = document.getElementById('tweak-startup-apps');
-            if(startupTweak) startupTweak.classList.remove('hidden');
-        }
+        const cpuTweaks = [
+            'tweak-univ-visual',
+            'tweak-univ-foreground',
+            'tweak-startup-apps',
+            'tweak-early-balanced',
+            'tweak-early-minstate',
+            'tweak-mid-balanced',
+            'tweak-mid-coreparking',
+            'tweak-next-boost',
+            'tweak-next-hags'
+        ];
+        cpuTweaks.forEach(id => {
+            const card = document.getElementById(id);
+            if (card) card.classList.remove('hidden');
+        });
     } 
     else if (component === 'gpu') {
         if (groupName === 'NVIDIA') {
@@ -168,8 +111,23 @@ function showGuide(tweakType) {
         console.error("Missing DOM elements for the guide.");
         return;
     }
+
+    const nvidiaRefs = `
+        <div class="mt-5 pt-4 border-t border-emerald-200">
+            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline text-emerald-700 break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-emerald-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+        </div>
+    `;
+
+    const amdRefs = `
+        <div class="mt-5 pt-4 border-t border-red-200">
+            <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
+            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline text-red-700 break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-red-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+        </div>
+    `;
     
-    // ================== CPU GUIDES ==================
     if (tweakType === 'visual') {
         headerText.innerText = `${currentCpuGroup}: Adjust Windows Visual Effects`;
         guideContainer.innerHTML = `
@@ -352,56 +310,7 @@ function showGuide(tweakType) {
                 <div class="bg-orange-50 border-t border-orange-200 px-6 md:px-8 py-4"><p class="text-sm text-orange-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
             </div>
         `;
-    } else if (tweakType === 'intel-modern-hags') {
-        headerText.innerText = `${currentCpuGroup}: Hardware Accelerated GPU Scheduling (HAGS)`;
-        guideContainer.innerHTML = `
-            <div class="glass-card overflow-hidden fade-in">
-                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
-                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (4).mp4" type="video/mp4"></video>
-                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
-                    </div>
-                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this optimization?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Users who run applications that frequently utilize GPU processing along with the CPU may benefit from this optimization, as it helps reduce CPU involvement in graphics workload scheduling.</p></div>
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Hardware Accelerated GPU Scheduling shifts part of the graphics task scheduling process from the CPU to the GPU. By allowing the GPU to manage its own task queue, the CPU performs fewer scheduling operations related to graphics workloads, which can reduce CPU overhead.</p></div>
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact in most situations. In some workloads the difference may be minimal because the optimization mainly affects how graphics tasks are scheduled rather than the computational capability of the CPU.</p></div>
-                    </div>
-                </div>
-                <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4"><p class="text-sm text-blue-800"><strong class="font-bold">NOTE:</strong> This optimization indirectly improves CPU workload distribution. By transferring certain scheduling responsibilities to the GPU, the CPU spends less time managing graphics queues and can allocate more processing time to other system tasks.</p></div>
-            </div>
-        `;
-    } else if (tweakType === 'intel-modern-boost') {
-        headerText.innerText = `${currentCpuGroup}: Processor Performance Boost Mode`;
-        guideContainer.innerHTML = `
-            <div class="glass-card overflow-hidden fade-in">
-                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
-                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                        <video controls class="w-full rounded-xl shadow-lg bg-slate-900 aspect-video object-cover"><source src="videos/Cpu Ryzen 6 (3).mp4" type="video/mp4"></video>
-                        <p class="text-xs text-slate-400 mt-3 text-center">Video Walkthrough</p>
-                    </div>
-                    <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Laptop users who want a good balance between performance and temperature while running everyday workloads such as browsing, coding, media, or occasional heavy tasks.</p></div>
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: It changes the CPU boost behavior so the processor increases its clock speed only when necessary instead of boosting aggressively all the time.</p></div>
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: No major negative impact. Extremely heavy workloads may see slightly slower boost response compared to the fully aggressive mode.</p></div>
-                    </div>
-                </div>
-                <div class="bg-blue-50 border-t border-blue-200 px-6 md:px-8 py-4 text-sm text-blue-800">
-                    <p class="mb-2"><strong class="font-bold">NOTE:</strong> Processor Boost Mode controls how aggressively the CPU increases its clock speed when a workload appears. Different modes prioritize either performance or power efficiency.</p>
-                    <ul class="list-disc pl-5 mb-2 space-y-1">
-                        <li><strong>Disabled:</strong> Prevents the CPU from boosting above its base clock speed. This reduces heat and power usage but also lowers performance.</li>
-                        <li><strong>Enabled:</strong> Allows the processor to boost normally when the operating system requests higher performance.</li>
-                        <li><strong>Aggressive:</strong> The CPU boosts to higher frequencies immediately when workload appears, providing the fastest performance but also increasing heat and power consumption.</li>
-                        <li><strong>Efficient Enabled:</strong> Allows boosting while attempting to maintain better energy efficiency compared to the standard enabled mode.</li>
-                        <li><strong>Efficient Aggressive:</strong> Boosts quickly when needed but still tries to control power usage and temperature, making it suitable for balanced laptop usage.</li>
-                    </ul>
-                    <p>Users can adjust the boost mode according to their needs depending on whether they prefer maximum performance, balanced efficiency, or lower temperatures and better battery life.</p>
-                </div>
-            </div>
-        `;
-    }
-
-    // ================== GPU GUIDES (NVIDIA) ==================
-    else if (tweakType === 'gpu-battery') {
+    } else if (tweakType === 'gpu-battery') {
         headerText.innerText = `${currentCpuGroup}: Battery Saving Preset`;
         guideContainer.innerHTML = `
             <div class="glass-card overflow-hidden fade-in">
@@ -448,8 +357,8 @@ function showGuide(tweakType) {
                         </ul>
                         <div class="mt-5 pt-4 border-t border-emerald-200">
                             <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
-                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
-                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline text-emerald-700 break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-emerald-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
                         </div>
                     </div>
                 </div>
@@ -502,8 +411,8 @@ function showGuide(tweakType) {
                         </ul>
                         <div class="mt-5 pt-4 border-t border-emerald-200">
                             <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
-                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
-                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline text-emerald-700 break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-emerald-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
                         </div>
                     </div>
                 </div>
@@ -558,17 +467,14 @@ function showGuide(tweakType) {
                         </ul>
                         <div class="mt-5 pt-4 border-t border-emerald-200">
                             <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
-                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
-                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                            <p>1] <a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm" target="_blank" class="hover:underline text-emerald-700 break-all">https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nv3d/Manage_3D_Settings_(reference).htm</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-emerald-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         `;
-    }
-
-    // ================== GPU GUIDES (AMD RADEON) ==================
-    else if (tweakType === 'amd-battery') {
+    } else if (tweakType === 'amd-battery') {
         headerText.innerText = `${currentCpuGroup}: Battery Saving Preset`;
         guideContainer.innerHTML = `
             <div class="glass-card overflow-hidden fade-in">
@@ -609,8 +515,8 @@ function showGuide(tweakType) {
                         </ul>
                         <div class="mt-5 pt-4 border-t border-red-200">
                             <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
-                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
-                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline text-red-700 break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-red-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
                         </div>
                     </div>
                 </div>
@@ -658,8 +564,8 @@ function showGuide(tweakType) {
                         </ul>
                         <div class="mt-5 pt-4 border-t border-red-200">
                             <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
-                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
-                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline text-red-700 break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-red-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
                         </div>
                     </div>
                 </div>
@@ -682,7 +588,7 @@ function showGuide(tweakType) {
                     <div class="w-full lg:w-1/2 space-y-6 text-left flex flex-col justify-center">
                         <div><h4 class="font-bold text-slate-800 text-lg">Q: When and which users should use this tweak?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Ideal for power users, 3D artists, and enthusiasts with excellent cooling who want absolute maximum rendering speeds and visual fidelity.</p></div>
                         <div><h4 class="font-bold text-slate-800 text-lg">Q: What does this optimization do?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Disables all power-saving constraints, forces the highest texture quality, and safely overclocks the core and memory for unconstrained performance.</p></div>
-                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1">Ans: Drastically increases power consumption, significantly raises system temperatures, and causes very loud fan noise. Highly discouraged on battery.</p></div>
+                        <div><h4 class="font-bold text-slate-800 text-lg">Q: Will it cause any negative impact instead?</h4><p class="text-slate-600 mt-1 border-b border-slate-100 pb-3">Ans: Drastically increases power consumption, significantly raises system temperatures, and causes very loud fan noise. Highly discouraged on battery.</p></div>
                     </div>
                 </div>
                 <div class="bg-red-50 border-t border-red-200 px-6 md:px-8 py-6 text-sm text-red-900">
@@ -709,17 +615,14 @@ function showGuide(tweakType) {
                         </ul>
                         <div class="mt-5 pt-4 border-t border-red-200">
                             <p class="font-bold mb-2">For more info about Graphics features refer these:</p>
-                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
-                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
+                            <p>1] <a href="https://www.amd.com/en/resources/support-articles/faqs/DH-012.html" target="_blank" class="hover:underline text-red-700 break-all">https://www.amd.com/en/resources/support-articles/faqs/DH-012.html</a></p>
+                            <p class="mt-1">2] <a href="https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR" target="_blank" class="hover:underline text-red-700 break-all">https://youtu.be/SylFhDMHDnQ?si=Ei6m28fYOTALUWMR</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         `;
-    }
-
-    // ================== RAM GUIDES ==================
-    else if (tweakType === 'ram-startup') {
+    } else if (tweakType === 'ram-startup') {
         headerText.innerText = `${currentCpuGroup}: Disable Unnecessary Startup Apps`;
         guideContainer.innerHTML = `
             <div class="glass-card overflow-hidden fade-in">
@@ -757,8 +660,8 @@ function showGuide(tweakType) {
                     </div>
                 </div>
                 <div class="bg-purple-50 border-t border-purple-200 px-6 md:px-8 py-4"><p class="text-sm text-purple-800"><strong class="font-bold">NOTE:</strong> Do not disable services you actually need to run on your system. You can safely disable <strong>DiagsTrack</strong>, <strong>diagnosticshub.standardcollector.service</strong>, <strong>dmwappushservice</strong>, and retaildemo as these are retail purpose or Microsoft bug reporting and tracking services that have no use or importance in the system and are highly considered to be disabled.</p></div>
-            </div>
-        `;
+                    </div>
+                `;
     } else if (tweakType === 'ram-browser') {
         headerText.innerText = `${currentCpuGroup}: Enable Browser Memory Saver`;
         guideContainer.innerHTML = `
@@ -799,10 +702,7 @@ function showGuide(tweakType) {
                 <div class="bg-purple-50 border-t border-purple-200 px-6 md:px-8 py-4"><p class="text-sm text-purple-800"><strong class="font-bold">NOTE:</strong> This is a highly effective, completely safe OS-level change that instantly reclaims usable system RAM and can be effortlessly reversed at any time.</p></div>
             </div>
         `;
-    }
-
-    // ================== DISK GUIDES ==================
-    else if (tweakType === 'disk-storagesense') {
+    } else if (tweakType === 'disk-storagesense') {
         headerText.innerText = `${currentCpuGroup}: Enable Storage Sense`;
         guideContainer.innerHTML = `
             <div class="glass-card overflow-hidden fade-in">
@@ -866,44 +766,23 @@ function showGuide(tweakType) {
 }
 
 function goBack() {
-    const cpuPage = document.getElementById('cpuPage');
     const gpuPage = document.getElementById('gpuPage');
     const tweaksListPage = document.getElementById('tweaksListPage');
     const tweaksPage = document.getElementById('tweaksPage');
 
     if (!tweaksPage.classList.contains('hidden')) {
-        // If on final guide -> Go back to tweak list
         navigate('tweaksListPage');
     } 
     else if (!tweaksListPage.classList.contains('hidden')) {
-        // If on tweak list -> Go back to specific component page or main menu
-        if (currentComponent === 'cpu') {
-            navigate('cpuPage');
-        } else if (currentComponent === 'gpu') {
+        if (currentComponent === 'gpu') {
             navigate('gpuPage');
             document.getElementById('gpuBrandSelection').classList.remove('hidden');
             document.getElementById('gpuBrandSelection').classList.add('fade-in');
         } else {
-            // RAM and Disk go straight back to main
             navigate('mainPage');
         }
     } 
-    else if (!cpuPage.classList.contains('hidden')) {
-        // If on CPU page -> Check if we are deep in intel/amd selection or at root
-        const amdSeries = document.getElementById('amdSeriesSelection');
-        const intelSeries = document.getElementById('intelSeriesSelection');
-        
-        if (!amdSeries.classList.contains('hidden') || !intelSeries.classList.contains('hidden')) {
-            amdSeries.classList.add('hidden');
-            intelSeries.classList.add('hidden');
-            document.getElementById('cpuBrandSelection').classList.remove('hidden');
-            document.getElementById('cpuBrandSelection').classList.add('fade-in');
-        } else {
-            navigate('mainPage');
-        }
-    }
     else if (!gpuPage.classList.contains('hidden')) {
-        // If on GPU page -> Go back to main menu
         navigate('mainPage');
     }
 }

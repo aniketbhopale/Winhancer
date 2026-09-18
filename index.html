@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-slate-800 pb-20 selection:bg-indigo-100 selection:text-indigo-900">
-    
-    <!-- Main Selection Page -->
     <div id="mainPage" class="page-container container mx-auto px-4 py-16 max-w-5xl fade-in">
         <div class="text-center mb-16">
             <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-3">
@@ -24,8 +22,7 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- CPU Block -->
-            <div onclick="navigate('cpuPage')" class="glass-card interactive-card p-8 group">
+            <div onclick="showTweakList('CPU', 'cpu')" class="glass-card interactive-card p-8 group">
                 <div class="w-14 h-14 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
@@ -34,7 +31,6 @@
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">CPU Optimizations</h2>
             </div>
             
-            <!-- GPU Block -->
             <div onclick="navigate('gpuPage')" class="glass-card interactive-card p-8 group">
                 <div class="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,7 +40,6 @@
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">GPU Optimizations</h2>
             </div>
             
-            <!-- RAM Block -->
             <div onclick="showTweakList('System Memory Allocation', 'ram')" class="glass-card interactive-card p-8 group">
                 <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,7 +49,6 @@
                 <h2 class="text-2xl font-bold mb-2 text-slate-800">Memory allocation (RAM)</h2>
             </div>
             
-            <!-- Disk Block -->
             <div onclick="showTweakList('Storage Drive', 'disk')" class="glass-card interactive-card p-8 group">
                 <div class="w-14 h-14 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-orange-600 group-hover:text-white transition-all duration-300">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,76 +60,10 @@
         </div>
     </div>
     
-    <!-- CPU Selection Flow -->
-    <div id="cpuPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
-        <div class="flex gap-6 mb-10 border-b border-slate-200 pb-4">
-            <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Back
-            </button>
-            <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                System Overview
-            </button>
-        </div>
-        
-        <div id="cpuBrandSelection">
-            <div class="mb-10 text-center">
-                <h2 class="text-3xl font-bold text-slate-900 mb-2">Select Processor Architecture</h2>
-                <p class="text-slate-500">Choose your manufacturer to load specific instruction sets.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card interactive-card p-6 flex items-center justify-center h-32 group" onclick="selectCpuBrand('intel')">
-                    <div class="text-blue-600 font-bold text-3xl tracking-wider group-hover:text-blue-700 transition-colors">INTEL</div>
-                </div>
-                <div class="glass-card interactive-card p-6 flex items-center justify-center h-32 group" onclick="selectCpuBrand('amd')">
-                    <div class="text-red-600 font-bold text-3xl tracking-wider group-hover:text-red-700 transition-colors">AMD</div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="amdSeriesSelection" class="hidden">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Ryzen Generation</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early-Gen Ryzen', 'cpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Early-Gen Ryzen</div>
-                    <p class="text-sm text-slate-500">2000 & 3000 Series</p>
-                </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Mid-Gen Ryzen', 'cpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Mid-Gen Ryzen</div>
-                    <p class="text-sm text-slate-500">4000 & 5000 Series</p>
-                </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Next-Gen Ryzen', 'cpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-indigo-600 transition-colors">Next-Gen Ryzen</div>
-                    <p class="text-sm text-slate-500">6000 Series & Newer</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="intelSeriesSelection" class="hidden">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Select Intel Generation</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Legacy Intel', 'cpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Legacy & Pre-Hybrid</div>
-                    <p class="text-sm text-slate-500">8th, 9th, 10th Gen</p>
-                </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Early Hybrid Intel', 'cpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Early Hybrid</div>
-                    <p class="text-sm text-slate-500">11th & 12th Gen</p>
-                </div>
-                <div class="glass-card interactive-card p-6 text-center group flex flex-col items-center justify-center" onclick="showTweakList('Modern Hybrid Intel', 'cpu')">
-                    <div class="text-slate-800 font-bold text-xl mb-1 group-hover:text-blue-600 transition-colors">Modern Hybrid & Ultra</div>
-                    <p class="text-sm text-slate-500">13th, 14th Gen & Core Ultra</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- GPU Selection Flow -->
     <div id="gpuPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
         <div class="flex gap-6 mb-10 border-b border-slate-200 pb-4">
             <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7-7h18"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 Back
             </button>
             <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
@@ -160,11 +88,10 @@
         </div>
     </div>
     
-    <!-- Tweak List Page -->
     <div id="tweaksListPage" class="page-container hidden container mx-auto px-4 py-12 max-w-4xl">
         <div class="flex gap-6 mb-10 border-b border-slate-200 pb-4">
             <button onclick="goBack()" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2 font-semibold transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7-7h18"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 Back
             </button>
             <button onclick="navigate('mainPage')" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors">
@@ -179,8 +106,6 @@
         </div>
         
         <div id="tweaksList" class="space-y-4">
-            
-            <!-- Universal Tweaks -->
             <div id="tweak-univ-visual" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('visual')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -214,7 +139,6 @@
                 </div>
             </div>
 
-            <!-- AMD Ryzen CPU Tweaks -->
             <div id="tweak-early-balanced" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('early-balanced')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -281,30 +205,6 @@
                 </div>
             </div>
 
-            <!-- INTEL: Modern Hybrid -->
-            <div id="tweak-intel-modern-boost" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('intel-modern-boost')">
-                <div class="flex items-start gap-4">
-                    <div class="mt-0.5 flex-shrink-0">
-                        <div class="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                    </div>
-                    <div><p class="text-slate-800 font-medium leading-relaxed">Processor Performance Boost Mode</p></div>
-                </div>
-            </div>
-
-            <div id="tweak-intel-modern-hags" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('intel-modern-hags')">
-                <div class="flex items-start gap-4">
-                    <div class="mt-0.5 flex-shrink-0">
-                        <div class="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                    </div>
-                    <div><p class="text-slate-800 font-medium leading-relaxed">Turn on Hardware Accelerated GPU Scheduling (HAGS)</p></div>
-                </div>
-            </div>
-
-            <!-- GPU Presets (NVIDIA) -->
             <div id="tweak-gpu-battery" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('gpu-battery')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -347,7 +247,6 @@
                 </div>
             </div>
             
-            <!-- GPU Presets (AMD Radeon) -->
             <div id="tweak-amd-battery" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('amd-battery')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -390,7 +289,6 @@
                 </div>
             </div>
 
-            <!-- RAM Tweaks -->
             <div id="tweak-ram-startup" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('ram-startup')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -447,7 +345,6 @@
                 </div>
             </div>
 
-            <!-- Disk Tweaks -->
             <div id="tweak-disk-storagesense" class="tweak-card group relative bg-white p-5 rounded-xl border border-slate-200 shadow-sm interactive-card fade-in hidden" onclick="showGuide('disk-storagesense')">
                 <div class="flex items-start gap-4">
                     <div class="mt-0.5 flex-shrink-0">
@@ -493,7 +390,6 @@
         </div>
     </div>
 
-    <!-- Final Guide Display Page -->
     <div id="tweaksPage" class="page-container hidden container mx-auto px-4 py-12 max-w-5xl">
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
             <div class="flex gap-6">
@@ -521,10 +417,8 @@
         </div>
         
         <div id="guideContent">
-            <!-- Content will be dynamically inserted here -->
         </div>
     </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
